@@ -4,7 +4,7 @@
       <label>{{ label }}</label>
     </div>
 
-    <div class="border border-solid border-brand-border dark:bg-[#1E293B]/30 dark:border-brand-border/20 w-full p-2 rounded-md">
+    <div class="border border-solid border-brand-border-white dark:bg-[#1E293B]/30 dark:border-brand-border-dark w-full p-2 rounded-md">
       <input type="text" class="w-full border-0 outline-none bg-transparent dark:text-white" :placeholder>
     </div>
   </div>

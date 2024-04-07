@@ -13,7 +13,10 @@ export default defineConfig({
         'primary': '#8571ff',
         'white': '#FFFFFF',
         'dark': '#111827',
-        'border': '#EDEDED',
+        'border': {
+          'white': '#EDEDED',
+          'dark': '#1E293B',
+        }
       }
     }
   }
