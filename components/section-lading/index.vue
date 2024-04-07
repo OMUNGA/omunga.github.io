@@ -9,12 +9,12 @@
         O <span class="text-brand-primary">saber</span> não <br> ocupa Lugar
       </Text>
 
-      <Text class="dark:text-white mt-5 text-slate-900 text-lg opacity-70">
+      <Text class="dark:text-white mt-7 text-slate-900 text-lg opacity-70">
         O melhor lugar para buscar e publicar seus artigos e blogs <br> relacionados a TI. Aqui
         acreditamos o poder da partilha de conteúdos
       </Text>
 
-      <OButton class="text-nowrap  text-sm font-bold mt-5"> Começar agora </OButton>
+      <OButton class="text-nowrap  text-sm font-bold mt-8"> Começar agora </OButton>
     </div>
 
     <div class="w-full mt-5 flex justify-center items-center overflow-hidden">
