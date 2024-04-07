@@ -1,6 +1,13 @@
 <template>
   <button :class="buttonClass" class="">
-    <slot/>
+    <template v-if="props.to">
+    <NuxtLink :to="props.to">
+      <slot/>
+    </NuxtLink>
+    </template>
+    <template v-else>
+      <slot/>
+    </template>
   </button>
 </template>
 
@@ -11,6 +18,7 @@ interface IButton {
   color?: string,
   bgColor?: string
   fontSize?: number | string
+  to?: string
 }
 
 const props = withDefaults(defineProps<IButton>(), {
@@ -34,3 +42,10 @@ const buttonClass = computed(()=>{
   }
 })
 </script>
+
+<style scoped>
+a {
+  text-decoration: none;
+  color: inherit;
+}
+</style>
