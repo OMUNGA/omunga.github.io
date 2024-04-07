@@ -5,5 +5,6 @@ import Header from "./Header/index.vue"
 import Logo from "./Logo/index.vue"
 import OInput from "./Input/index.vue"
 import Menu from "./Menu/index.vue"
+import Heading from "./section-lading/index.vue"
 
-export {Text, OButton, Link, Header, Logo, OInput, Menu}
+export {Text, OButton, Link, Header, Logo, OInput, Menu, Heading}
