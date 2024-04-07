@@ -7,11 +7,14 @@
     <Text class="dark:text-white font-bold text-slate-900 text-3xl">
       Omunga app
     </Text>
+
+    <OInput label="username" placeholder="type username"/>
+
   </div>
 </template>
 
 <script setup lang="ts">
-import {Text, Button} from "@/components"
+import {Text, OButton, OInput} from "@/components"
 type Theme = 'light' | 'dark' | 'system';
 
 const setColorTheme = (newTheme: Theme) =>{

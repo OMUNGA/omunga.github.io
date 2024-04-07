@@ -1,4 +1,9 @@
 import Text from "./Text/index.vue"
-import Button from "./Button/index.vue"
+import OButton from "./Button/index.vue"
+import Link from "./Button/index.vue"
+import Header from "./Header/index.vue"
+import Logo from "./Logo/index.vue"
+import OInput from "./Input/index.vue"
 
-export {Text, Button}
+
+export {Text, OButton, Link, Header, Logo, OInput}

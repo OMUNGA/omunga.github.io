@@ -12,7 +12,8 @@ export default defineConfig({
         'brand': {
         'primary': '#8571ff',
         'white': '#FFFFFF',
-        'dark': '#1f2937',
+        'dark': '#111827',
+        'border': '#EDEDED',
       }
     }
   }
