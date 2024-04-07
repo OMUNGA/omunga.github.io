@@ -1,13 +1,11 @@
 <template>
   <div>
-    <Text class="dark:text-white font-bold text-slate-900 text-3xl">
-      Omunga app
-    </Text>
+    <Heading/>
   </div>
 </template>
 
 <script setup lang="ts">
-import {Text, OButton, OInput} from "@/components"
+import {Text, OButton, OInput, Heading} from "@/components"
 
 
 </script>
