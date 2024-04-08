@@ -1,7 +1,8 @@
 <template>
-  <header class="h-16 w-full shadow-sm dark:shadow-[#1C273D] sticky top-0">
-    <div class="mx-auto h-full px-4 flex justify-between items-center gap-4">
-      <div class="flex justify-center items-center">
+  <header class="h-16 flex w-full shadow-sm bg-white/75 dark:bg-brand-dark/75 backdrop-blur  dark:shadow-[#1C273D]/50 sticky top-0">
+    <Container>
+        <div class="h-full w-full flex justify-between items-center gap-4">
+          <div class="flex justify-center items-center">
         <Logo />
       </div>
       <div class="w-[500px]">
@@ -28,17 +29,18 @@
 
             <div class="text-brand-border-white dark:text-brand-border-dark">|</div>
 
-            <OButton variant="unstyle" class="bg-transparent border-0 ">
-              <div class="i-grommet-icons-github text-2xl text-black/50 hover:text-black/80 dark:text-slate-600 dark:hover:text-slate-300"></div>
+            <OButton variant="unstyle" class="bg-transparent border-0">
+              <div class="i-grommet-icons-github text-2xl cursor-pointer text-black/50 hover:text-black/80 dark:text-slate-600 dark:hover:text-slate-300"></div>
             </OButton>
         </div>
       </div>
-    </div>
+        </div>
+    </Container>
   </header>
 </template>
 
 <script setup lang="ts">
-import {Logo, OButton, OInput, Menu} from "@/components"
+import {Logo, OButton, OInput, Menu, Container} from "@/components"
 
 const isOpen = ref(false)
 
