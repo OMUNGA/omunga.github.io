@@ -1,3 +1,3 @@
-import useDark from "./useDark";
+import {useDark} from "./useDark";
 
 export {useDark}
