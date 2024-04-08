@@ -6,7 +6,11 @@
         <Logo />
       </div>
       <div class="w-[500px]">
-        <OInput placeholder="Pesquise por um assunto"/>
+        <OInput placeholder="Pesquise por um assunto">
+          <template #icon>
+            <div class="i-ic-outline-search text-2xl text-white/35"></div>
+          </template>
+        </OInput>
       </div>
       <div class="flex gap-2 items-center">
      
