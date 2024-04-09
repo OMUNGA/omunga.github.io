@@ -67,6 +67,7 @@
             Novo no omunga?
             <OButton
               variant="unstyle"
+              to="/register"
               class="bg-transparent border-0 text-brand-primary font-semibold dark:font-normal cursor-pointer"
               >Criar conta</OButton
             >
