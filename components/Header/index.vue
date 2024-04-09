@@ -1,6 +1,6 @@
 <template>
   <header
-    class="h-16 flex w-full shadow-sm bg-white/75 dark:bg-brand-dark/75 backdrop-blur dark:shadow-[#1C273D]/50 sticky top-0"
+    class="h-16 flex w-full shadow-sm bg-white/75 dark:bg-brand-dark/75 backdrop-blur dark:shadow-brand-shadow/50 sticky top-0"
   >
     <Container>
       <div class="h-full w-full flex justify-between items-center gap-4">
@@ -28,27 +28,11 @@
             |
           </div>
           <div class="flex gap-2 items-center">
-            <Menu :isOpen="isOpen">
-              <OButton
-                variant="unstyle"
-                class="bg-transparent border-0"
-                @click="toggleMenu"
-              >
-                <div
-                  class="i-carbon-sun dark:i-carbon-moon cursor-pointer text-2xl text-black/50 hover:text-black/80 dark:text-slate-600 dark:hover:text-slate-300"
-                ></div>
-              </OButton>
-            </Menu>
-
+            <ThemeToggle />
             <div class="text-brand-border-white dark:text-brand-border-dark">
               |
             </div>
-
-            <OButton variant="unstyle" class="bg-transparent border-0">
-              <div
-                class="i-grommet-icons-github text-2xl cursor-pointer text-black/50 hover:text-black/80 dark:text-slate-600 dark:hover:text-slate-300"
-              ></div>
-            </OButton>
+            <SocialMedia />
           </div>
         </div>
       </div>
@@ -57,11 +41,12 @@
 </template>
 
 <script setup lang="ts">
-import { Logo, OButton, OInput, Menu, Container } from "@/components";
-
-const isOpen = ref(false);
-
-function toggleMenu() {
-  isOpen.value = !isOpen.value;
-}
+import {
+  Logo,
+  OButton,
+  OInput,
+  Container,
+  ThemeToggle,
+  SocialMedia,
+} from "@/components";
 </script>
