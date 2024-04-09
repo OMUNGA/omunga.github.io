@@ -1,12 +1,9 @@
 <template>
   <div class="h-screen dark:bg-brand-dark">
-    <Header />
     <section>
       <slot />
     </section>
   </div>
 </template>
 
-<script setup lang="ts">
-import { Header } from "@/components";
-</script>
+<script setup lang="ts"></script>

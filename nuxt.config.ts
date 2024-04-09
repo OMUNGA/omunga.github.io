@@ -1,21 +1,23 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
+  ssr: false,
   image: {
     format: ["webp"],
   },
   colorMode: {
-    preference: 'system',
-    classSuffix: ''
+    preference: "system",
+    classSuffix: "",
   },
   modules: [
-  '@unocss/nuxt',
-  '@nuxtjs/color-mode',
+    "@unocss/nuxt",
+    "@nuxtjs/color-mode",
     [
       "@nuxtjs/google-fonts",
       {
         families: {
-          Roboto: [400],
+          // REMOVER AS QUE NÃO FOREM UTILIZADAS
+          Roboto: [100, 200, 300, 400, 500, 600, 700, 800, 900],
         },
         display: "swap",
       },
