@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen dark:bg-brand-dark">
+  <div class="min-h-screen dark:bg-brand-dark">
     <Header />
     <section>
       <slot />
