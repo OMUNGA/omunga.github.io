@@ -9,8 +9,10 @@ import Container from "./Container/index.vue";
 import ThemeToggle from "./ThemeToggle/index.vue";
 import SocialMedia from "./SocialMedia/index.vue";
 import Footer from "./Footer/index.vue";
+import Topics from "./BestTopics/index.vue";
 
 export {
+  Topics,
   Footer,
   Text,
   OButton,
