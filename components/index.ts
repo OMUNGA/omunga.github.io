@@ -8,8 +8,10 @@ import Heading from "./section-lading/index.vue";
 import Container from "./Container/index.vue";
 import ThemeToggle from "./ThemeToggle/index.vue";
 import SocialMedia from "./SocialMedia/index.vue";
+import Footer from "./Footer/index.vue";
 
 export {
+  Footer,
   Text,
   OButton,
   Link,

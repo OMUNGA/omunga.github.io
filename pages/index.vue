@@ -1,11 +1,10 @@
 <template>
   <div>
-    <Heading/>
+    <Heading />
+    <Footer />
   </div>
 </template>
 
 <script setup lang="ts">
-import {Text, OButton, OInput, Heading} from "@/components"
-
-
+import { Heading, Footer } from "@/components";
 </script>
