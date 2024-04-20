@@ -1,12 +1,12 @@
 <template>
   <header
-    class="h-16 flex w-full shadow-sm bg-white/75 dark:bg-brand-dark/75 backdrop-blur dark:shadow-brand-shadow/50 sticky top-0"
+    class="h-16 fixed z-50 flex w-full shadow-sm bg-white dark:bg-brand-dark dark:shadow-brand-shadow/50 top-0"
   >
     <Container>
       <div class="h-full w-full flex justify-between items-center gap-4">
         <div class="flex justify-center items-center">
           <OButton variant="unstyle" class="bg-transparent border-0" to="/">
-            <Logo />
+            <Logo variant="full" />
           </OButton>
         </div>
         <div class="w-[500px]">
