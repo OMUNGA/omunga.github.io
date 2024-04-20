@@ -6,16 +6,17 @@
       >Topicos mais pesquisados</span
     >
     <div class="flex flex-wrap gap-2">
-      <span
-        class="dark:text-white text-slate-900 cursor-pointer text-sm rounded-full py-2 px-4 border border-solid border-brand-border-white dark:border-brand-border-dark hover:bg-black/5 dark:hover:bg-white/5"
+      <Chip
+        class="cursor-pointer hover:bg-black/5 dark:hover:bg-white/5"
         v-for="(topic, index) in topics"
         :id="index.toString()"
-        >{{ topic }}</span
+        >{{ topic }}</Chip
       >
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { Chip } from "@/components";
 const { topics } = defineProps<{ topics: string[] }>();
 </script>

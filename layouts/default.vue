@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen dark:bg-brand-dark">
     <Header />
-    <section>
+    <section class="pt-16">
       <slot />
     </section>
   </div>
