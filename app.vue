@@ -1,6 +1,6 @@
 <template>
   <NuxtLayout>
-    <NuxtPage/>
+    <NuxtPage />
   </NuxtLayout>
 </template>
 
@@ -8,9 +8,13 @@
 * {
   font-family: Roboto;
 }
-html, body{
+html,
+body {
   padding: 0;
   margin: 0;
 }
 
+html.dark {
+  background-color: #111827;
+}
 </style>

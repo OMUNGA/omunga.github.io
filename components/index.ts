@@ -13,6 +13,7 @@ import Topics from "./BestTopics/index.vue";
 import Card from "./Card/index.vue";
 import Avatar from "./Avatar/index.vue";
 import Chip from "./Chip/index.vue";
+import Modal from "./Modal/index.vue";
 
 export {
   Topics,
@@ -30,4 +31,5 @@ export {
   Card,
   Avatar,
   Chip,
+  Modal,
 };
