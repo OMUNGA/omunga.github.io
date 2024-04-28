@@ -1,5 +1,5 @@
 <template>
-  <button :class="buttonClass" type="button">
+  <button v-bind="$attrs" :class="buttonClass" type="button">
     <template v-if="props.to">
       <NuxtLink :to="props.to">
         <slot />

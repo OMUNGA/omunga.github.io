@@ -1,5 +1,5 @@
 <template>
-  <div class="w-12 h-12 rounded-full overflow-hidden">
+  <div v-bind="$attrs" class="rounded-full overflow-hidden">
     <img class="w-full object-cover" src="@/assets/avatar.jpg" alt="" />
   </div>
 </template>
