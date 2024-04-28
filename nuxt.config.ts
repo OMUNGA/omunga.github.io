@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   app: {
-    baseURL: "/omunga/",
+    // baseURL: "/omunga-app/",
     // buildAssetsDir: "assets",
   },
   devtools: { enabled: true },
