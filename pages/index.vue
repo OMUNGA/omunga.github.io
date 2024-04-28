@@ -37,17 +37,13 @@
                     alt=""
                   />
                 </div>
-                <div
-                  class="text-center sm:text-left md:text-center lg:text-left"
-                >
+                <div class="">
                   <span
                     class="font-bold text-2xl text-slate-900 dark:text-white"
                     >24 Frontend Development Tools You Should Know in 2024</span
                   >
                 </div>
-                <div
-                  class="text-center sm:text-left md:text-center lg:text-left"
-                >
+                <div class="">
                   <span class="text-slate-600 dark:text-slate-400 font-light">
                     In the fast-evolving landscape of web development, staying
                     abreast of the latest tools can significantly impact the
