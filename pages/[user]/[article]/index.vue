@@ -26,7 +26,7 @@
         </div>
 
         <span class="text-slate-900 dark:text-white">
-          artigo sobre {{ useRoute().params.article }} aqui
+          artigo sobre {{ article }} aqui
         </span>
       </section>
       <aside class="h-full min-w-70 sticky top-19.5 hidden md:block">
