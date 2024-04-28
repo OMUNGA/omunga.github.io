@@ -25,8 +25,7 @@ export default defineNuxtConfig({
         },
         display: "swap",
       },
-    ],
-    // Image Optimization
+    ], // Image Optimization
     "@nuxt/image",
   ],
 });

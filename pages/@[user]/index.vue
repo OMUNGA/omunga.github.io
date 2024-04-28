@@ -1,10 +1,20 @@
 <template>
   <Container>
-    <div v-if="user[0].startsWith('@')" class="flex justify-between mt-6 mx-2">
-      <section class="w-full flex flex-col md:mr-12 gap-9">
-        <span class="text-slate-900 dark:text-white">
-          Perfil de {{ user }} aqui
-        </span>
+    <div class="flex justify-between mt-6 mx-2">
+      <section class="w-full flex flex-col md:mr-12 gap-4">
+        <div class="w-full max-h-40">
+          <img
+            class="w-full h-full object-cover"
+            src="@/assets/vue.jpg"
+            alt=""
+          />
+        </div>
+
+        <TabView>
+          <TabPanel panel="Home">Home aqui</TabPanel>
+          <TabPanel panel="Recomendações">Recomendações aqui</TabPanel>
+          <TabPanel panel="Sobre mim">Sobre mim aqui</TabPanel>
+        </TabView>
       </section>
       <aside class="h-full min-w-70 sticky top-19.5 hidden md:block">
         <div class="w-full flex flex-col gap-4">
@@ -61,12 +71,13 @@
         </div>
       </aside>
     </div>
-    <span v-else> user not found </span>
   </Container>
 </template>
 
 <script setup lang="ts">
 import { Container, Card, Avatar, OButton } from "@/components";
+import TabView from "@/components/Tab/TabView.vue";
+import TabPanel from "@/components/Tab/TabPanel.vue";
 
 const { user } = useRoute().params;
 </script>
