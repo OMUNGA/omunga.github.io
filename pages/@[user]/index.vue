@@ -3,11 +3,7 @@
     <div class="flex justify-between mt-6 mx-2">
       <section class="w-full flex flex-col md:mr-12 gap-4">
         <div class="w-full max-h-40">
-          <img
-            class="w-full h-full object-cover"
-            src="@/assets/vue.jpg"
-            alt=""
-          />
+          <img class="w-full h-full object-cover" src="/vue.jpg" alt="" />
         </div>
 
         <TabView>

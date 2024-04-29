@@ -9,6 +9,8 @@
     >
       <slot name="icon" />
       <input
+        :value="modelValue"
+        @input="emit('update:modelValue', $event.target?.value)"
         v-bind="$attrs"
         class="w-full border-0 outline-none bg-transparent dark:invert"
         :placeholder
@@ -21,11 +23,15 @@
 withDefaults(
   defineProps<{
     placeholder: string;
+    modelValue?: string;
   }>(),
   {
     placeholder: "change placeholder by props",
+    modelValue: "",
   }
 );
+
+const emit = defineEmits(["update:modelValue"]);
 </script>
 
 <style scoped>

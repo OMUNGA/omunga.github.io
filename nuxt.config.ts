@@ -15,7 +15,7 @@ export default defineNuxtConfig({
   },
   modules: [
     "@unocss/nuxt",
-    "@nuxtjs/color-mode",
+    "@nuxtjs/color-mode", // Image Optimization
     [
       "@nuxtjs/google-fonts",
       {
@@ -25,7 +25,10 @@ export default defineNuxtConfig({
         },
         display: "swap",
       },
-    ], // Image Optimization
+    ],
     "@nuxt/image",
+    "nuxt-graphql-client",
+    "@pinia/nuxt",
+    "@pinia-plugin-persistedstate/nuxt",
   ],
 });
