@@ -1,10 +1,8 @@
 <template>
   <Menu as="div" class="relative inline-block text-left">
-    <div>
-      <MenuButton class="bg-transparent border-0">
-        <div
-          class="i-carbon-sun dark:i-carbon-moon cursor-pointer text-2xl text-black/50 hover:text-black/80 dark:text-slate-600 dark:hover:text-slate-300"
-        ></div>
+    <div class="w-full">
+      <MenuButton class="w-full p-0 m-0 bg-transparent border-0">
+        <slot name="button" />
       </MenuButton>
     </div>
 
@@ -17,7 +15,7 @@
       leave-to-class="transform scale-95 opacity-0"
     >
       <MenuItems
-        class="w-[150px] shadow-sm ring-black/5 absolute right-0 origin-top-left focus:outline-none mt-3 py-[6px] bg-white dark:bg-brand-dark rounded-md right-0 border border-solid border-brand-border-white dark:border-brand-border-dark"
+        class="w-[150px] shadow-sm ring-black/5 absolute origin-top-left focus:outline-none mt-3 py-[6px] bg-white dark:bg-brand-dark rounded-md right-0 border border-solid border-brand-border-white dark:border-brand-border-dark"
       >
         <MenuItem>
           <div

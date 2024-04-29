@@ -12,7 +12,9 @@
   "dependencies": {
     "@headlessui/vue": "^1.7.19",
     "@nuxt/image": "^1.5.0",
+    "@pinia/nuxt": "^0.5.1",
     "nuxt": "^3.11.1",
+    "nuxt-graphql-client": "^0.2.34",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"
   },
@@ -21,6 +23,7 @@
     "@nuxtjs/color-mode": "^3.3.3",
     "@nuxtjs/google-fonts": "^3.2.0",
     "@nuxtjs/tailwindcss": "^6.12.0",
+    "@pinia-plugin-persistedstate/nuxt": "^1.2.0",
     "@unocss/nuxt": "^0.59.0"
   }
 }

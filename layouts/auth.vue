@@ -11,7 +11,13 @@
           <span> Home </span>
         </OButton>
         <div class="flex gap-2 items-center">
-          <ThemeToggle />
+          <ThemeToggle>
+            <template #button>
+              <div
+                class="i-carbon-sun dark:i-carbon-moon cursor-pointer text-2xl text-black/50 hover:text-black/80 dark:text-slate-600 dark:hover:text-slate-300"
+              ></div>
+            </template>
+          </ThemeToggle>
           <div class="text-brand-border-white dark:text-brand-border-dark">
             |
           </div>

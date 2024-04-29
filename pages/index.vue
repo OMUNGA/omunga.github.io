@@ -33,7 +33,7 @@
                 >
                   <img
                     class="object-cover w-full h-full"
-                    src="@/assets/project.png"
+                    src="/project.png"
                     alt=""
                   />
                 </div>
@@ -64,11 +64,7 @@
               </div>
               <div class="hidden sm:flex md:hidden lg:flex items-center">
                 <div class="rounded overflow-hidden">
-                  <img
-                    class="object-cover w-full"
-                    src="@/assets/project.png"
-                    alt=""
-                  />
+                  <img class="object-cover w-full" src="/project.png" alt="" />
                 </div>
               </div>
             </template>

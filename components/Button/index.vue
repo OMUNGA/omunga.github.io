@@ -24,7 +24,8 @@ const props = withDefaults(defineProps<IButton>(), {
   variant: "solid",
 });
 
-const baseClasses = "px-[18px] py-[14px] rounded-md  cursor-pointer";
+const baseClasses =
+  "px-[18px] py-[14px] rounded-md  cursor-pointer outline-none focus:outline-none";
 
 const buttonClass = computed(() => {
   if (props.variant == "link") {
