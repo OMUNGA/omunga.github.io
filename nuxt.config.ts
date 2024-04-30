@@ -13,6 +13,11 @@ export default defineNuxtConfig({
     preference: "system",
     classSuffix: "",
   },
+  runtimeConfig: {
+    public: {
+      GQL_HOST: "https://omunga-api-9pjq.onrender.com/graphql",
+    },
+  },
   modules: [
     "@unocss/nuxt",
     "@nuxtjs/color-mode", // Image Optimization
