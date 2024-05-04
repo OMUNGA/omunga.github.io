@@ -17,5 +17,6 @@ body {
 
 html.dark {
   background-color: #111827;
+  scrollbar-color: #1e293b #111827;
 }
 </style>
