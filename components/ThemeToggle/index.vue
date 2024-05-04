@@ -1,5 +1,5 @@
 <template>
-  <Menu as="div" class="relative inline-block text-left">
+  <Menu as="div" class="relative font-normal inline-block text-left">
     <div class="w-full">
       <MenuButton class="w-full p-0 m-0 bg-transparent border-0">
         <slot name="button" />

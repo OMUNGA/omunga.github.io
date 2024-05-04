@@ -15,6 +15,7 @@ import Avatar from "./Avatar/index.vue";
 import Chip from "./Chip/index.vue";
 import Modal from "./Modal/index.vue";
 import Aside from "./Aside/index.vue";
+import Editor from "./Editor/index.vue";
 
 export {
   Topics,
@@ -34,4 +35,5 @@ export {
   Chip,
   Modal,
   Aside,
+  Editor,
 };

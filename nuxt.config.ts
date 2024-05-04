@@ -15,12 +15,10 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      GQL_HOST: "https://omunga-api-9pjq.onrender.com/graphql",
+      // GQL_HOST: "https://omunga-api-9pjq.onrender.com/graphql",
     },
   },
   modules: [
-    "@unocss/nuxt",
-    "@nuxtjs/color-mode", // Image Optimization
     [
       "@nuxtjs/google-fonts",
       {
@@ -31,6 +29,8 @@ export default defineNuxtConfig({
         display: "swap",
       },
     ],
+    "@unocss/nuxt",
+    "@nuxtjs/color-mode",
     "@nuxt/image",
     "nuxt-graphql-client",
     "@pinia/nuxt",
