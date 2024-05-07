@@ -15,7 +15,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      // GQL_HOST: "https://omunga-api-9pjq.onrender.com/graphql",
+      GQL_HOST: "https://omunga.up.railway.app/graphql",
     },
   },
   modules: [

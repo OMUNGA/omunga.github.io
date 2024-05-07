@@ -19,7 +19,7 @@
           </OInput>
         </div>
 
-        <div v-if="true" class="flex items-center gap-2">
+        <div v-if="isAuthenticated" class="flex items-center gap-2">
           <!-- <OButton
             variant="unstyle"
             class="md:hidden border-0 cursor-pointer bg-transparent p-2 text-black/35 dark:text-white/35"
@@ -80,7 +80,7 @@
               <div class="i-ic-outline-search text-2xl"></div>
             </OButton>
             <OButton
-              @click="mobileModalRef.openModal"
+              @click="mobileModalRef.openModal()"
               variant="unstyle"
               class="border-0 cursor-pointer bg-transparent p-2 text-black/35 dark:text-white/35"
             >
@@ -93,7 +93,7 @@
               <template #content>
                 <div class="absolute top-4 right-4">
                   <OButton
-                    @click="mobileModalRef.closeModal"
+                    @click="mobileModalRef.closeModal()"
                     variant="unstyle"
                     class="cursor-pointer border-0 bg-transparent text-black/35 dark:text-white/35"
                   >

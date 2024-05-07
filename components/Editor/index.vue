@@ -144,4 +144,11 @@ img {
     box-shadow: 0 3px 15px -3px var(--border);
   }
 }
+
+/* custom style */
+@media (min-width: 651px) {
+  .codex-editor--narrow .codex-editor__redactor {
+    margin-right: 0;
+  }
+}
 </style>

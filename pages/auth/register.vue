@@ -13,36 +13,41 @@
         class="bg-[#fefefe] dark:bg-brand-shadow/10 gap-4 flex flex-col relative w-[300px] p-[20px] rounded-md border border-solid border-brand-border-white dark:border-brand-border-dark"
       >
         <div class="w-full">
-          <OInput placeholder="username">
+          <OInput placeholder="Nome" v-model="data.name">
+            <template #label>
+              <span class="dark:text-white text-sm">Nome</span>
+            </template>
+          </OInput>
+        </div>
+        <div class="w-full">
+          <OInput placeholder="username" v-model="data.username">
             <template #label>
               <span class="dark:text-white text-sm">Username</span>
             </template>
           </OInput>
         </div>
         <div class="w-full">
-          <OInput placeholder="email" type="email">
+          <OInput placeholder="email" v-model="data.email">
             <template #label>
               <span class="dark:text-white text-sm">Email</span>
             </template>
           </OInput>
         </div>
         <div class="w-full">
-          <OInput placeholder="password" type="password">
+          <OInput
+            placeholder="password"
+            type="password"
+            v-model="data.password"
+          >
             <template #label>
               <span class="dark:text-white text-sm">Password</span>
             </template>
           </OInput>
         </div>
         <div class="w-full">
-          <OInput placeholder="password" type="password">
-            <template #label>
-              <span class="dark:text-white text-sm">Repita password</span>
-            </template>
-          </OInput>
-        </div>
-
-        <div class="w-full">
-          <OButton class="w-full">Criar conta</OButton>
+          <OButton class="w-full" @click="handleRegister()"
+            >Criar conta</OButton
+          >
         </div>
         <span class="text-xs dark:text-white/50 text-black/50 text-center"
           >ou criar conta com</span
@@ -77,9 +82,34 @@
 
 <script setup lang="ts">
 import { OInput, Container, OButton } from "~/components";
-
+import { useUser } from "@/composables";
 definePageMeta({
   alias: "/register",
   layout: "auth",
 });
+
+const { register } = useUser();
+interface IRegister {
+  name: string;
+  username: string;
+  email: string;
+  password: string;
+}
+
+const data = reactive<IRegister>({
+  name: "",
+  username: "",
+  email: "",
+  password: "",
+});
+
+async function handleRegister() {
+  const response = await register({ ...data });
+
+  if (response?.statusCode == 200) {
+    navigateTo("/login");
+  } else {
+    console.log(response);
+  }
+}
 </script>
