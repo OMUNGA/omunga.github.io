@@ -12,7 +12,7 @@
         :value="modelValue"
         @input="emit('update:modelValue', $event.target?.value)"
         v-bind="$attrs"
-        class="w-full border-0 outline-none bg-transparent dark:invert"
+        class="w-full border-0 outline-none bg-transparent dark:text-white"
         :placeholder
       />
     </div>

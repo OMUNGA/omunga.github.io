@@ -13,7 +13,7 @@
         class="bg-[#fefefe] dark:bg-brand-shadow/10 gap-4 flex flex-col relative w-[300px] p-[20px] rounded-md border border-solid border-brand-border-white dark:border-brand-border-dark"
       >
         <div class="w-full">
-          <OInput placeholder="username" v-model="credentials.email">
+          <OInput placeholder="email" v-model="credentials.email">
             <template #label>
               <span class="dark:text-white text-sm">Email</span>
             </template>
@@ -38,11 +38,7 @@
           >
         </div>
         <div class="w-full">
-          <OButton
-            @click="handleLogin(credentials.email, credentials.password)"
-            class="w-full"
-            >Entrar</OButton
-          >
+          <OButton @click="handleLogin()" class="w-full">Entrar</OButton>
         </div>
         <span class="text-xs dark:text-white/50 text-black/50 text-center"
           >ou continuar com</span
@@ -78,31 +74,32 @@
 <script setup lang="ts">
 import { OInput, Container, OButton } from "~/components";
 import { useAuthStore } from "@/store";
-
+import { useAuth } from "@/composables";
 definePageMeta({
   alias: "/login",
   layout: "auth",
 });
-const credentials = reactive<{
-  email: String | undefined;
-  password: String | undefined;
-}>({
+
+const { login } = useAuth();
+const { setUser } = useAuthStore();
+interface ILogin {
+  email: string;
+  password: string;
+}
+const credentials = reactive<ILogin>({
   email: "",
   password: "",
 });
 
-const authStore = useAuthStore();
-
-async function handleLogin(email: string, password: string) {
-  console.log("logando");
-  const result = await GqlLoginUser({
-    email: email,
-    password: password,
-  });
-  console.log({ result });
-  const onSave = await authStore.setUser(result.sigIn);
-  if (onSave) {
-    navigateTo("/");
+async function handleLogin() {
+  const response = await login({ ...credentials });
+  if (response?.statusCode == 200) {
+    const onSave = await setUser(response.data);
+    if (onSave) {
+      navigateTo("/");
+    }
+  } else {
+    console.log(response);
   }
 }
 </script>

@@ -1,38 +1,8 @@
 import { defineStore } from "pinia";
-import { emptyUser } from "@/constants";
-interface IUser {
-  isAuthenticated: boolean;
-  user: {
-    id: string;
-    username: string;
-    name: string;
-    email: string;
-    bio: string;
-    phone: string;
-  };
-  token: Token;
-}
-
-interface Token {
-  value: string;
-  expiredAt: string;
-}
-
-interface sigIn {
-  token: string;
-  expiresIn: any;
-  user: {
-    id: string;
-    name: string;
-    username: string;
-    email: string;
-    bio: string;
-    phone: string;
-  };
-}
-
+import type { IAuthenticatedUser, IUser } from "@/types";
+import { authenticatedUser } from "@/constants";
 export const useAuthStore = defineStore("auth", {
-  state: (): IUser => {
+  state: (): IAuthenticatedUser => {
     return {
       isAuthenticated: false,
       user: {
@@ -50,22 +20,20 @@ export const useAuthStore = defineStore("auth", {
     };
   },
   actions: {
-    async setUser(sigIn: sigIn): Promise<boolean> {
-      if (sigIn.token) {
+    async setUser(sign: IUser): Promise<boolean> {
+      if (sign.token) {
         this.isAuthenticated = true;
-        this.user = sigIn.user;
+        this.user = sign.user;
         this.token = {
-          value: sigIn.token,
-          expiredAt: sigIn.expiresIn,
+          value: sign.token,
+          expiredAt: sign.expiresIn,
         };
       }
       return this.isAuthenticated;
     },
 
     async logout(): Promise<boolean> {
-      this.$state = { ...emptyUser };
-
-      console.log("logout ", this.isAuthenticated);
+      this.$state = { ...authenticatedUser };
       return !this.isAuthenticated;
     },
   },

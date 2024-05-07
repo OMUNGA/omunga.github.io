@@ -1,7 +1,9 @@
 <template>
   <Container>
-    <Card class="w-full max-w-2xl mx-auto flex justify-between mb-4">
-      <template #content>
+    <Card
+      class="lg:w-full lg:max-w-2xl lg:mx-auto mx-4 flex justify-between mb-4"
+    >
+      <template #error>
         <div class="flex flex-col gap-4">
           <span class="text-2xl font-semibold dark:text-white text-slate-900"
             >Titulo do Artigo aqui</span
@@ -21,9 +23,7 @@
         </Card>
       </template>
     </Card>
-
     <Editor :data="[]" ref="editorRef" />
-
     <OButton @click="handleOnSave()">Salvar</OButton>
   </Container>
 </template>

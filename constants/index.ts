@@ -1,3 +1,3 @@
-import { emptyUser } from "./User";
+import { authenticatedUser } from "./User";
 
-export { emptyUser };
+export { authenticatedUser };

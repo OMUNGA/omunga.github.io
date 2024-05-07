@@ -1,0 +1,39 @@
+mutation LoginUser($email: String!, $password: String!) {
+  sigIn(data: { email: $email, password: $password }) {
+    token
+    expiresIn
+    user {
+      id
+      name
+      username
+      email
+      bio
+      phone
+    }
+  }
+}
+
+mutation CreateUser(
+  $name: String!
+  $username: String!
+  $email: String!
+  $password: String!
+) {
+  signup(
+    data: {
+      name: $name
+      email: $email
+      bio: "none"
+      phone: "none"
+      password: $password
+      username: $username
+    }
+  ) {
+    id
+    name
+    username
+    email
+    bio
+    phone
+  }
+}
