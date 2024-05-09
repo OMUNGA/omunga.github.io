@@ -14,7 +14,7 @@ export default defineConfig({
           white: "#EDEDED",
           dark: "#1E293B",
         },
-        shadow: "#1C273D",
+        shadow: "",
       },
     },
   },

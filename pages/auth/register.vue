@@ -1,115 +1,127 @@
-<template>
-  <Container>
-    <div class="flex flex-col items-center py-8 gap-4">
-      <div class="flex flex-col items-center gap-4">
-        <Logo variant="full" class="scale-100" />
-        <span class="text-sm dark:text-white/50 text-black/50">
-          Crie a sua conta
-          <span class="text-xs text-brand-primary font-semibold">Omunga</span> e
-          desfrute já</span
-        >
-      </div>
-      <div
-        class="bg-[#fefefe] dark:bg-brand-shadow/10 gap-4 flex flex-col relative w-[300px] p-[20px] rounded-md border border-solid border-brand-border-white dark:border-brand-border-dark"
-      >
-        <div class="w-full">
-          <OInput placeholder="Nome" v-model="data.name">
-            <template #label>
-              <span class="dark:text-white text-sm">Nome</span>
-            </template>
-          </OInput>
-        </div>
-        <div class="w-full">
-          <OInput placeholder="username" v-model="data.username">
-            <template #label>
-              <span class="dark:text-white text-sm">Username</span>
-            </template>
-          </OInput>
-        </div>
-        <div class="w-full">
-          <OInput placeholder="email" v-model="data.email">
-            <template #label>
-              <span class="dark:text-white text-sm">Email</span>
-            </template>
-          </OInput>
-        </div>
-        <div class="w-full">
-          <OInput
-            placeholder="password"
-            type="password"
-            v-model="data.password"
-          >
-            <template #label>
-              <span class="dark:text-white text-sm">Password</span>
-            </template>
-          </OInput>
-        </div>
-        <div class="w-full">
-          <OButton class="w-full" @click="handleRegister()"
-            >Criar conta</OButton
-          >
-        </div>
-        <span class="text-xs dark:text-white/50 text-black/50 text-center"
-          >ou criar conta com</span
-        >
-        <div class="flex gap-4">
-          <OButton
-            class="opacity-70 hover:opacity-100 w-full px-[18px] py-[14px] rounded-md border-0 dark:bg-brand-border-dark bg-brand-border-white cursor-pointer flex justify-center items-center"
-            variant="unstyle"
-          >
-            <div class="i-logos-google-icon text-2xl" />
-          </OButton>
-          <OButton
-            class="opacity-70 hover:opacity-100 w-full px-[18px] py-[14px] rounded-md border-0 dark:bg-brand-border-dark bg-brand-border-white cursor-pointer flex justify-center items-center"
-            variant="unstyle"
-          >
-            <div class="i-grommet-icons-github dark:text-slate-300 text-2xl" />
-          </OButton>
-        </div>
-        <span class="text-sm dark:text-white/50 text-black/50 text-center">
-          Já tem conta omunga?
-          <OButton
-            variant="unstyle"
-            to="/login"
-            class="bg-transparent border-0 text-brand-primary font-semibold dark:font-normal cursor-pointer"
-            >Entrar</OButton
-          >
-        </span>
-      </div>
-    </div>
-  </Container>
-</template>
-
 <script setup lang="ts">
-import { OInput, Container, OButton } from "~/components";
+import { z } from "zod";
+import type { FormSubmitEvent } from "#ui/types";
+import { useAuthStore } from "@/store";
 import { useUser } from "@/composables";
+import type { IRegisterRequest } from "@/types";
+
 definePageMeta({
   alias: "/register",
   layout: "auth",
 });
 
-const { register } = useUser();
-interface IRegister {
-  name: string;
-  username: string;
-  email: string;
-  password: string;
-}
+const schema = z.object({
+  name: z.string().min(3, "nome inválido"),
+  username: z.string().min(3, "username inválido"),
+  email: z.string().email("email inválido"),
+  password: z.string().min(8, "a senha deve conter pelo menos 8 caracteres"),
+});
 
-const data = reactive<IRegister>({
+type Schema = z.output<typeof schema>;
+
+const { register } = useUser();
+const { setUser } = useAuthStore();
+
+const state = reactive<IRegisterRequest>({
   name: "",
   username: "",
   email: "",
   password: "",
 });
 
-async function handleRegister() {
-  const response = await register({ ...data });
+const error = ref("");
+const isLoading = ref(false);
 
+async function onSubmit(event: FormSubmitEvent<Schema>) {
+  isLoading.value = true;
+  const response = await register({ ...state });
+  isLoading.value = false;
   if (response?.statusCode == 200) {
     navigateTo("/login");
   } else {
-    console.log(response);
+    error.value = response?.message || "";
   }
 }
+
+watch([state], () => {
+  error.value = "";
+});
 </script>
+
+<template>
+  <UContainer>
+    <div class="flex flex-col items-center py-8 gap-4">
+      <div class="flex flex-col items-center gap-4">
+        <Logo variant="full" class="scale-100" />
+        <span class="text-sm dark:text-white/50 text-black/50"
+          >Crie a sua conta
+          <span class="text-xs text-primary font-semibold">Omunga</span> e
+          desfrute já</span
+        >
+      </div>
+      <UCard class="w-full max-w-xs">
+        <UForm
+          :schema="schema"
+          :state="state"
+          class="w-full space-y-4"
+          @submit="onSubmit"
+        >
+          <UFormGroup label="Nome" name="name">
+            <UInput v-model="state.name" />
+          </UFormGroup>
+          <UFormGroup label="Username" name="username">
+            <UInput v-model="state.username" />
+          </UFormGroup>
+          <UFormGroup label="Email" name="email">
+            <UInput v-model="state.email" />
+          </UFormGroup>
+
+          <UFormGroup label="Password" name="password">
+            <UInput v-model="state.password" type="password" />
+          </UFormGroup>
+
+          <div v-if="error" class="w-full flex justify-center">
+            <span class="text-sm font-semibold text-red-600 dark:text-red-400">
+              {{ error }}
+            </span>
+          </div>
+          <UButton
+            type="submit"
+            loading-icon="i-carbon-circle-dash"
+            :loading="isLoading"
+            block
+          >
+            <span class="text-white"> Criar conta </span>
+          </UButton>
+          <UDivider label="ou" />
+          <div class="w-full max-w-xs flex justify-center items-end gap-4">
+            <UButton
+              icon="i-logos-google-icon"
+              color="gray"
+              variant="ghost"
+              size="lg"
+            />
+            <UButton
+              icon="i-carbon-logo-github"
+              color="gray"
+              variant="ghost"
+              size="lg"
+            />
+          </div>
+          <div class="flex justify-center">
+            <span class="text-sm dark:text-white/50 text-black/50"
+              >Novo no omunga?
+              <ULink
+                to="/login"
+                class="text-primary"
+                active-class="text-primary"
+              >
+                Entrar
+              </ULink>
+            </span>
+          </div>
+        </UForm>
+      </UCard>
+    </div>
+  </UContainer>
+</template>

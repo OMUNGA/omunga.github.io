@@ -1,4 +1,4 @@
-import type { IAuthenticatedUser } from "@/types";
+import type { IAuthenticatedUser, IUser } from "@/types";
 
 export const authenticatedUser: IAuthenticatedUser = {
   isAuthenticated: false,
@@ -13,5 +13,18 @@ export const authenticatedUser: IAuthenticatedUser = {
   token: {
     value: "",
     expiredAt: "",
+  },
+};
+
+export const user: IUser = {
+  token: "",
+  expiresIn: "",
+  user: {
+    bio: "",
+    email: "",
+    id: "",
+    name: "",
+    phone: "",
+    username: "",
   },
 };

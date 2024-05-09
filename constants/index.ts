@@ -1,3 +1,3 @@
-import { authenticatedUser } from "./User";
+import { authenticatedUser, user } from "./User";
 
-export { authenticatedUser };
+export { authenticatedUser, user };

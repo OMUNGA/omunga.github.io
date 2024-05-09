@@ -1,166 +1,142 @@
 <template>
   <header
-    class="h-16 fixed z-50 flex w-full shadow-sm bg-white dark:bg-brand-dark dark:shadow-brand-shadow/50 top-0"
+    class="h-16 z-10 sticky flex w-full shadow-sm bg-white dark:bg-omunga-dark dark:shadow-omunga-shadow/50 top-0"
   >
-    <Container class="px-4">
-      <div class="h-16 w-full flex justify-between items-center gap-4">
-        <div class="sm:flex justify-center items-center">
-          <OButton variant="unstyle" class="bg-transparent border-0" to="/">
-            <Logo />
-          </OButton>
-        </div>
-        <div class="hidden md:block w-full max-w-[500px]">
-          <OInput placeholder="Pesquise por um assunto">
-            <template #icon>
-              <div
-                class="i-ic-outline-search text-2xl text-black/35 dark:text-white/35"
-              ></div>
-            </template>
-          </OInput>
-        </div>
+    <UContainer class="w-full">
+      <div class="w-full h-full flex justify-between items-center gap-4">
+        <Logo />
+        <UInput
+          class="hidden md:block w-full max-w-lg"
+          icon="i-heroicons-magnifying-glass-20-solid"
+          size="md"
+          color="white"
+          :trailing="false"
+          placeholder="Pesquise por um assunto..."
+        />
+        <template v-if="isAuthenticated">
+          <div class="flex items-center gap-4">
+            <div class="flex gap-2">
+              <UButton
+                variant="outline"
+                class="dark:hover:bg-transparent hidden sm:flex"
+                label="Novo"
+                size="lg"
+                to="/new"
+              />
+              <UButton
+                icon="i-heroicons-magnifying-glass-20-solid"
+                variant="ghost"
+                color="gray"
+                class="flex sm:hidden"
+              />
+              <UButton
+                icon="i-heroicons-bell-20-solid"
+                variant="ghost"
+                color="gray"
+              >
+              </UButton>
+            </div>
 
-        <div v-if="isAuthenticated" class="flex items-center gap-2">
-          <!-- <OButton
-            variant="unstyle"
-            class="md:hidden border-0 cursor-pointer bg-transparent p-2 text-black/35 dark:text-white/35"
-          >
-            <div class="i-ic-outline-search text-2xl"></div>
-          </OButton> -->
-
-          <OButton
-            variant="outline"
-            @click="navigateTo('/new')"
-            class="hidden sm:block"
-          >
-            novo
-          </OButton>
-          <OButton
-            variant="unstyle"
-            class="border-0 transition rounded cursor-pointer bg-transparent p-2 text-black/35 hover:text-black/75 dark:text-white/35 dark:hover:text-white/75"
-          >
-            <div
-              class="i-material-symbols-notifications-rounded text-2xl"
-            ></div>
-          </OButton>
-          <div @click="authenticatedModal.openModal()">
-            <Avatar src="/avatar.jpg" class="w-10 h-10" />
+            <UAvatar
+              :src="AvatarImage"
+              @click="isOpen = true"
+              alt="User User"
+              size="lg"
+              class="cursor-pointer"
+            />
+            <Aside v-model="isOpen" />
           </div>
+        </template>
+        <template v-else>
+          <div class="hidden md:flex items-center gap-2">
+            <div class="flex items-center">
+              <UButton to="/login" color="white" variant="ghost" size="lg">
+                <span class="font-normal"> Entrar </span>
+              </UButton>
 
-          <Aside ref="authenticatedModal" />
-        </div>
-        <div v-else>
-          <div class="hidden md:flex gap-2 items-center">
-            <div class="flex gap-4">
-              <OButton variant="link" to="login"> Entrar </OButton>
-
-              <OButton class="text-nowrap" to="register"> Criar conta </OButton>
+              <UButton
+                class="text-nowrap"
+                to="/register"
+                color="primary"
+                variant="solid"
+                size="lg"
+              >
+                <span class="text-white font-normal"> Criar conta </span>
+              </UButton>
             </div>
-            <div class="text-brand-border-white dark:text-brand-border-dark">
-              |
-            </div>
-            <div class="flex gap-2 items-center">
-              <ThemeToggle>
-                <template #button>
-                  <div
-                    class="i-carbon-sun dark:i-carbon-moon cursor-pointer text-2xl text-black/50 hover:text-black/80 dark:text-slate-600 dark:hover:text-slate-300"
-                  ></div>
-                </template>
-              </ThemeToggle>
-              <div class="text-brand-border-white dark:text-brand-border-dark">
-                |
-              </div>
+            <div class="flex items-center">
+              <ThemeToggle />
               <SocialMedia />
             </div>
           </div>
-          <div class="flex justify-center gap-4 items-center md:hidden">
-            <OButton
-              variant="unstyle"
-              class="border-0 cursor-pointer bg-transparent p-2 text-black/35 dark:text-white/35"
-            >
-              <div class="i-ic-outline-search text-2xl"></div>
-            </OButton>
-            <OButton
-              @click="mobileModalRef.openModal()"
-              variant="unstyle"
-              class="border-0 cursor-pointer bg-transparent p-2 text-black/35 dark:text-white/35"
-            >
-              <div
-                class="i-material-symbols-menu-rounded text-3xl"
-                aria-hidden="true"
-              ></div>
-            </OButton>
-            <Modal ref="mobileModalRef">
+          <div class="flex md:hidden">
+            <UButton
+              color="gray"
+              variant="ghost"
+              icon="i-heroicons-magnifying-glass-20-solid"
+            />
+            <UButton
+              color="gray"
+              variant="ghost"
+              icon="i-heroicons-bars-3-bottom-right-20-solid"
+              @click="isOpenModal = true"
+            />
+            <Modal v-model="isOpenModal">
               <template #content>
                 <div class="absolute top-4 right-4">
-                  <OButton
-                    @click="mobileModalRef.closeModal()"
-                    variant="unstyle"
-                    class="cursor-pointer border-0 bg-transparent text-black/35 dark:text-white/35"
+                  <UButton
+                    icon="i-heroicons-x-mark-20-solid"
+                    @click="isOpenModal = false"
+                    variant="solid"
+                    color="gray"
                   >
-                    <div
-                      class="i-material-symbols-close-rounded text-2xl"
-                      aria-hidden="true"
-                    ></div>
-                  </OButton>
+                  </UButton>
                 </div>
                 <div class="flex flex-col gap-4 items-start">
-                  <OButton
-                    to="login"
-                    variant="unstyle"
-                    class="text-base bg-transparent border-0 cursor-pointer text-brand-dark dark:text-brand-white hover:text-brand-primary"
-                    >Entrar</OButton
+                  <ULink
+                    to="/login"
+                    active-class="text-gray-700"
+                    inactive-class="text-omunga-dark dark:text-gray-400 hover:text-primary dark:hover:text-primary"
                   >
-                  <OButton
-                    to="register"
-                    variant="unstyle"
-                    class="text-base bg-transparent border-0 cursor-pointer text-brand-dark dark:text-brand-white hover:text-brand-primary"
-                    >Criar Conta</OButton
+                    Entrar
+                  </ULink>
+
+                  <ULink
+                    to="/register"
+                    active-class="text-gray-700"
+                    inactive-class="text-omunga-dark dark:text-gray-400 hover:text-primary dark:hover:text-primary"
                   >
-                  <OButton
-                    variant="unstyle"
-                    class="text-base bg-transparent border-0 cursor-pointer text-brand-dark dark:text-brand-white hover:text-brand-primary"
-                    >Github</OButton
+                    Criar conta
+                  </ULink>
+
+                  <ULink
+                    to="https://github.com/OMUNGA"
+                    active-class="text-gray-700"
+                    inactive-class="text-omunga-dark dark:text-gray-400 hover:text-primary dark:hover:text-primary"
                   >
+                    Github
+                  </ULink>
                   <div
                     class="border-0 w-full border-t-1 border-solid border-black/15 dark:border-white/15"
                   >
-                    <div class="mt-4 flex gap-4">
-                      <span class="font-normal">Mudar Tema</span>
-                      <ThemeToggle>
-                        <template #button>
-                          <div
-                            class="i-carbon-sun dark:i-carbon-moon cursor-pointer text-2xl text-black/50 hover:text-black/80 dark:text-slate-600 dark:hover:text-slate-300"
-                          ></div>
-                        </template>
-                      </ThemeToggle>
-                    </div>
+                    <ThemeToggle :label="true" />
                   </div>
                 </div>
               </template>
             </Modal>
           </div>
-        </div>
+        </template>
       </div>
-    </Container>
+    </UContainer>
   </header>
 </template>
 
 <script setup>
-import {
-  Logo,
-  OButton,
-  OInput,
-  Container,
-  ThemeToggle,
-  SocialMedia,
-  Modal,
-  Avatar,
-  Aside,
-} from "@/components";
+import { Logo, ThemeToggle, SocialMedia, Modal } from "@/components";
 import { useAuthStore } from "~/store";
-
-const mobileModalRef = ref(null);
-const authenticatedModal = ref(null);
+import AvatarImage from "@/public/avatar.jpg";
 
 const { isAuthenticated } = useAuthStore();
+const isOpenModal = ref(false);
+const isOpen = ref(false);
 </script>
