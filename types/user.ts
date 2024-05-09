@@ -20,6 +20,10 @@ export interface ILoginRequest {
   password: string;
 }
 
+export interface ILogoutResponse extends IResponse {
+  data: IUser;
+}
+
 export interface ILoginResponse extends IResponse {
   data: IUser;
 }

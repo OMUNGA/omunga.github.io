@@ -1,9 +1,7 @@
 <template>
   <div class="min-h-screen">
     <Header />
-    <section class="pt-16">
-      <slot />
-    </section>
+    <slot />
   </div>
 </template>
 

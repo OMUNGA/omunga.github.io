@@ -1,11 +1,10 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  app: {
-    // baseURL: "/omunga-app/",
-    // buildAssetsDir: "assets",
-  },
   devtools: { enabled: true },
   ssr: false,
+  ui: {
+    icons: ["mdi", "carbon", "logos", "heroicons"],
+  },
   image: {
     format: ["webp"],
   },
@@ -29,11 +28,11 @@ export default defineNuxtConfig({
         display: "swap",
       },
     ],
-    "@unocss/nuxt",
-    "@nuxtjs/color-mode",
+    // "@unocss/nuxt",
     "@nuxt/image",
     "nuxt-graphql-client",
     "@pinia/nuxt",
     "@pinia-plugin-persistedstate/nuxt",
+    "@nuxt/ui",
   ],
 });

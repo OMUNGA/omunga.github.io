@@ -1,105 +1,120 @@
-<template>
-  <Container>
-    <div class="flex flex-col items-center py-8 gap-4">
-      <div class="flex flex-col items-center gap-4">
-        <Logo variant="full" class="scale-100" />
-        <span class="text-sm dark:text-white/50 text-black/50"
-          >Faça login na sua conta
-          <span class="text-xs text-brand-primary font-semibold">Omunga</span> e
-          desfrute já</span
-        >
-      </div>
-      <div
-        class="bg-[#fefefe] dark:bg-brand-shadow/10 gap-4 flex flex-col relative w-[300px] p-[20px] rounded-md border border-solid border-brand-border-white dark:border-brand-border-dark"
-      >
-        <div class="w-full">
-          <OInput placeholder="email" v-model="credentials.email">
-            <template #label>
-              <span class="dark:text-white text-sm">Email</span>
-            </template>
-          </OInput>
-        </div>
-        <div class="w-full">
-          <OInput
-            placeholder="password"
-            type="password"
-            v-model="credentials.password"
-          >
-            <template #label>
-              <span class="dark:text-white text-sm">Password</span>
-            </template>
-          </OInput>
-        </div>
-        <div class="w-full text-right">
-          <OButton
-            variant="unstyle"
-            class="cursor-pointer font-semibold dark:font-normal bg-transparent border-0 text-brand-primary"
-            >Esqueceu a senha?</OButton
-          >
-        </div>
-        <div class="w-full">
-          <OButton @click="handleLogin()" class="w-full">Entrar</OButton>
-        </div>
-        <span class="text-xs dark:text-white/50 text-black/50 text-center"
-          >ou continuar com</span
-        >
-        <div class="flex gap-4">
-          <OButton
-            class="opacity-70 hover:opacity-100 w-full px-[18px] py-[14px] rounded-md border-0 dark:bg-brand-border-dark bg-brand-border-white cursor-pointer flex justify-center items-center"
-            variant="unstyle"
-          >
-            <div class="i-logos-google-icon text-2xl" />
-          </OButton>
-          <OButton
-            class="opacity-70 hover:opacity-100 w-full px-[18px] py-[14px] rounded-md border-0 dark:bg-brand-border-dark bg-brand-border-white cursor-pointer flex justify-center items-center"
-            variant="unstyle"
-          >
-            <div class="i-grommet-icons-github dark:text-slate-300 text-2xl" />
-          </OButton>
-        </div>
-        <span class="text-sm dark:text-white/50 text-black/50 text-center">
-          Novo no omunga?
-          <OButton
-            variant="unstyle"
-            to="/register"
-            class="bg-transparent border-0 text-brand-primary font-semibold dark:font-normal cursor-pointer"
-            >Criar conta</OButton
-          >
-        </span>
-      </div>
-    </div>
-  </Container>
-</template>
-
 <script setup lang="ts">
-import { OInput, Container, OButton } from "~/components";
+import { z } from "zod";
+import type { FormSubmitEvent } from "#ui/types";
 import { useAuthStore } from "@/store";
 import { useAuth } from "@/composables";
+import type { ILoginRequest } from "@/types";
+
 definePageMeta({
   alias: "/login",
   layout: "auth",
 });
 
+const schema = z.object({
+  email: z.string().email("email inválido"),
+  password: z.string().min(8, "a senha deve conter pelo menos 8 caracteres"),
+});
+
+type Schema = z.output<typeof schema>;
+
 const { login } = useAuth();
 const { setUser } = useAuthStore();
-interface ILogin {
-  email: string;
-  password: string;
-}
-const credentials = reactive<ILogin>({
+
+const state = reactive<ILoginRequest>({
   email: "",
   password: "",
 });
 
-async function handleLogin() {
-  const response = await login({ ...credentials });
+const error = ref("");
+const isLoading = ref(false);
+
+async function onSubmit(event: FormSubmitEvent<Schema>) {
+  isLoading.value = true;
+  const response = await login({ ...state });
+  isLoading.value = false;
   if (response?.statusCode == 200) {
     const onSave = await setUser(response.data);
     if (onSave) {
       navigateTo("/");
     }
   } else {
-    console.log(response);
+    error.value = response?.message || "";
   }
 }
+
+watch([state], () => {
+  error.value = "";
+});
 </script>
+
+<template>
+  <UContainer>
+    <div class="flex flex-col items-center py-8 gap-4">
+      <div class="flex flex-col items-center gap-4">
+        <Logo variant="full" class="scale-100" />
+        <span class="text-sm dark:text-white/50 text-black/50"
+          >Faça login na sua conta
+          <span class="text-xs text-primary font-semibold">Omunga</span> e
+          desfrute já</span
+        >
+      </div>
+      <UCard class="w-full max-w-xs">
+        <UForm
+          :schema="schema"
+          :state="state"
+          class="w-full space-y-4"
+          @submit="onSubmit"
+        >
+          <UFormGroup label="Email" name="email">
+            <UInput v-model="state.email" />
+          </UFormGroup>
+
+          <UFormGroup label="Password" name="password">
+            <UInput v-model="state.password" type="password" />
+          </UFormGroup>
+
+          <div v-if="error" class="w-full flex justify-center">
+            <span class="text-sm font-semibold text-red-600 dark:text-red-400">
+              {{ error }}
+            </span>
+          </div>
+          <UButton
+            type="submit"
+            loading-icon="i-carbon-circle-dash"
+            :loading="isLoading"
+            block
+          >
+            <span class="text-white"> Entrar </span>
+          </UButton>
+          <UDivider label="ou" />
+          <div class="w-full max-w-xs flex justify-center items-end gap-4">
+            <UButton
+              icon="i-logos-google-icon"
+              color="gray"
+              variant="ghost"
+              size="lg"
+            />
+            <UButton
+              icon="i-carbon-logo-github"
+              color="gray"
+              variant="ghost"
+              size="lg"
+            />
+          </div>
+          <div class="flex justify-center">
+            <span class="text-sm dark:text-white/50 text-black/50"
+              >Novo no omunga?
+              <ULink
+                to="/register"
+                class="text-primary"
+                active-class="text-primary"
+              >
+                Criar conta
+              </ULink>
+            </span>
+          </div>
+        </UForm>
+      </UCard>
+    </div>
+  </UContainer>
+</template>

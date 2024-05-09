@@ -1,6 +1,6 @@
 <template>
-  <TransitionRoot appear :show="isOpen" as="template">
-    <Dialog as="div" @close="closeModal" class="relative z-100">
+  <TransitionRoot appear :show="modelValue" as="template">
+    <Dialog as="div" @close="model = false" class="relative z-20">
       <TransitionChild
         as="template"
         enter="duration-300 ease-out"
@@ -25,7 +25,7 @@
             leave-to="opacity-0 scale-95"
           >
             <DialogPanel
-              class="fixed top-4 right-4 w-full max-w-xs bg-white rounded-lg shadow-lg p-6 text-base font-semibold text-slate-900 dark:bg-slate-800 dark:text-slate-400 dark:highlight-white/5"
+              class="fixed top-4 right-4 w-full max-w-xs bg-white rounded-lg shadow-lg p-6 text-slate-900 dark:bg-slate-800 dark:text-slate-400 dark:highlight-white/5"
             >
               <slot name="content" />
             </DialogPanel>
@@ -38,7 +38,6 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { OButton, ThemeToggle } from "@/components";
 import {
   TransitionRoot,
   TransitionChild,
@@ -46,14 +45,5 @@ import {
   DialogPanel,
 } from "@headlessui/vue";
 
-const isOpen = ref(false);
-function closeModal() {
-  isOpen.value = false;
-}
-
-function openModal() {
-  isOpen.value = true;
-}
-
-defineExpose({ openModal, closeModal });
+const model = defineModel();
 </script>
