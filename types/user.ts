@@ -13,6 +13,7 @@ export interface IUserSchema {
   email: string;
   bio: string;
   phone: string;
+  photo?: string;
 }
 
 export interface ILoginRequest {

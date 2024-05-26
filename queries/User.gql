@@ -37,3 +37,9 @@ mutation CreateUser(
     phone
   }
 }
+
+mutation UpdateUser($user: UpdateUserDTO!) {
+  updateUser(data: $user) {
+    id
+  }
+}

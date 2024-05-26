@@ -17,84 +17,17 @@
           </template>
           <template #explorar>
             <div class="w-full flex flex-col mt-4 gap-4">
-              <UCard v-for="card in 5" :id="card">
-                <div class="w-full flex gap-4">
-                  <div class="w-full flex flex-col gap-2">
-                    <div class="w-full flex gap-4">
-                      <UAvatar :src="AvatarImage" alt="User User" size="lg" />
-                      <div
-                        class="text-slate-900 dark:text-white flex flex-col justify-around text-black/50"
-                      >
-                        <span>Miguel Domingos</span>
-                        <span class="text-xs">20 Abril 2024</span>
-                      </div>
-                    </div>
-                    <div
-                      class="block sm:hidden md:block lg:hidden rounded overflow-hidden w-full h-[150px]"
-                    >
-                      <img
-                        class="object-cover w-full h-full"
-                        src="../public/project.png"
-                        alt=""
-                      />
-                    </div>
-                    <div class="">
-                      <span
-                        class="font-bold text-2xl text-slate-900 dark:text-white"
-                        >24 Frontend Development Tools You Should Know in
-                        2024</span
-                      >
-                    </div>
-                    <div class="">
-                      <span
-                        class="text-slate-600 dark:text-slate-400 font-light"
-                      >
-                        In the fast-evolving landscape of web development,
-                        staying abreast of the latest tools can significantly
-                        impact the efficiency, quality, and innovation of your
-                        projects.
-                      </span>
-                    </div>
-                    <div
-                      class="flex justify-center sm:justify-start md:justify-center lg:justify-start gap-2 mt-4"
-                    >
-                      <UBadge
-                        variant="solid"
-                        color="gray"
-                        size="md"
-                        :ui="{ rounded: 'rounded-full' }"
-                        class="font-normal"
-                        >vue.js</UBadge
-                      >
-                      <UBadge
-                        variant="solid"
-                        color="gray"
-                        size="md"
-                        class="font-normal"
-                        :ui="{ rounded: 'rounded-full' }"
-                        >framework</UBadge
-                      >
-                      <UBadge
-                        variant="solid"
-                        color="gray"
-                        class="font-normal"
-                        size="md"
-                        :ui="{ rounded: 'rounded-full' }"
-                        >frontend</UBadge
-                      >
-                    </div>
-                  </div>
-                  <div class="hidden sm:flex md:hidden lg:flex items-center">
-                    <div class="rounded overflow-hidden">
-                      <img
-                        class="object-cover w-full"
-                        src="../public/project.png"
-                        alt=""
-                      />
-                    </div>
-                  </div>
-                </div>
-              </UCard>
+              <template v-if="posts && Object.keys(posts).length > 0">
+                <template v-if="posts.totalPosts == 0">
+                  <span>sem artigos</span>
+                </template>
+                <template v-else>
+                  <Card v-for="post in posts.posts" :article="post" />
+                </template>
+              </template>
+              <template v-else>
+                <CardSkeleton />
+              </template>
             </div>
           </template>
         </UTabs>
@@ -110,10 +43,12 @@
 </template>
 
 <script setup lang="ts">
-import { Footer, Topics } from "@/components";
+import { Footer, Topics, Card, CardSkeleton } from "@/components";
 import AvatarImage from "@/public/empty-avatar.jpeg";
-const topics = ["programaçao", "vue.js", "go", "uidesign", "nuxt.js", "devops"];
+import { useArticle } from "@/composables";
+import type { IGetAllArticle } from "@/types/article";
 
+const topics = ["programaçao", "vue.js", "go", "uidesign", "nuxt.js", "devops"];
 const items = [
   {
     label: "Explorar",
@@ -135,7 +70,8 @@ const items = [
 
 const route = useRoute();
 const router = useRouter();
-
+const { getAll } = useArticle();
+const posts = ref<IGetAllArticle>();
 const selected = computed({
   get() {
     const index = items.findIndex((item) => item.label === route.query.tab);
@@ -151,5 +87,12 @@ const selected = computed({
       query: { tab: items[value].label },
     });
   },
+});
+
+onBeforeMount(async () => {
+  const response = await getAll();
+  if (response.statusCode == 200) {
+    posts.value = response.data;
+  }
 });
 </script>

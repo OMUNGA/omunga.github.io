@@ -1,4 +1,4 @@
-import type { IRegisterRequest, IRegisterResponse } from "@/types";
+import type { IRegisterRequest, IRegisterResponse, IUserSchema } from "@/types";
 import { useResponse } from "@/composables";
 
 const { getResponse, setResponse } = useResponse();
@@ -19,5 +19,17 @@ export function useUser() {
     }
   }
 
-  return { register };
+  async function updateUser(data: Partial<IUserSchema>) {
+    try {
+      const response = await GqlUpdateUser({ user: data });
+      if (response.updateUser) {
+        const id = response.updateUser.id;
+        return setResponse(200, "success", { id });
+      }
+    } catch (err) {
+      return getResponse(err);
+    }
+  }
+
+  return { register, updateUser };
 }

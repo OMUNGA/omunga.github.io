@@ -8,6 +8,8 @@ import SocialMedia from "./SocialMedia/index.vue";
 import Modal from "./Modal/index.vue";
 import Aside from "./Aside/index.vue";
 import Editor from "./Editor/index.vue";
+import Card from "./Card/index.vue";
+import CardSkeleton from "./CardSkeleton/index.vue";
 
 export {
   Topics,
@@ -20,4 +22,6 @@ export {
   Modal,
   Aside,
   Editor,
+  Card,
+  CardSkeleton,
 };

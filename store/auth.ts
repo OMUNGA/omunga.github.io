@@ -1,6 +1,5 @@
 import { defineStore } from "pinia";
-import type { IAuthenticatedUser, IUser } from "@/types";
-import { authenticatedUser } from "@/constants";
+import type { IAuthenticatedUser, IUser, IUserSchema } from "@/types";
 export const useAuthStore = defineStore("auth", {
   state: (): IAuthenticatedUser => {
     return {
@@ -12,6 +11,7 @@ export const useAuthStore = defineStore("auth", {
         email: "",
         bio: "",
         phone: "",
+        photo: "",
       },
       token: {
         value: "",
@@ -28,6 +28,13 @@ export const useAuthStore = defineStore("auth", {
         expiredAt: sign.expiresIn,
       };
       return this.isAuthenticated;
+    },
+    async updateUserStore(data: Partial<IUserSchema>): Promise<boolean> {
+      if (data) {
+        this.user = { ...this.user, ...data };
+        return true;
+      }
+      return false;
     },
   },
   persist: true,

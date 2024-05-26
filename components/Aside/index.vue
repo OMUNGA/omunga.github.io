@@ -52,7 +52,10 @@ import { ThemeToggle } from "@/components";
 
 const model = defineModel();
 
-const { user, setUser } = useAuthStore();
+const authStore = useAuthStore;
+
+const { user } = storeToRefs(authStore());
+const { setUser } = authStore();
 const { logout } = useAuth();
 const links = [
   [
@@ -61,7 +64,8 @@ const links = [
         src: UserAvatar,
         alt: "",
       },
-      label: user.name,
+      label: user.value.name,
+      to: `/@${user.value.username}`,
     },
   ],
   [
@@ -93,6 +97,7 @@ const links = [
     {
       label: "Editar perfil",
       icon: "i-carbon-settings",
+      to: "/settings",
     },
   ],
   [

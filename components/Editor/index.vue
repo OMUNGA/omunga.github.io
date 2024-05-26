@@ -29,8 +29,8 @@ const editor = new EditorJS({
     },
     image: ImageTo64,
   },
-  data: { blocks: [] },
-  // data: props.data,
+  // data: { blocks: [] },
+  data: { ...props.data },
 });
 
 async function save() {
