@@ -8,6 +8,12 @@ export function useAuth() {
     try {
       const response = await GqlLoginUser({ email, password });
       if (response.sigIn) {
+        useGqlToken({
+          token: response.sigIn.token,
+          config: {
+            type: "Bearer",
+          },
+        });
         return setResponse(200, "success", response.sigIn) as ILoginResponse;
       }
     } catch (err) {
@@ -19,6 +25,7 @@ export function useAuth() {
   }
   async function logout() {
     try {
+      useGqlToken(null);
       return setResponse(200, "success", user) as ILogoutResponse;
     } catch (err) {
       const error = getResponse(err) as ILogoutResponse;

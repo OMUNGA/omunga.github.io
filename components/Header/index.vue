@@ -4,7 +4,7 @@
   >
     <UContainer class="w-full">
       <div class="w-full h-full flex justify-between items-center gap-4">
-        <Logo />
+        <Logo @click="() => navigateTo('/')" class="cursor-pointer" />
         <UInput
           class="hidden md:block w-full max-w-lg"
           icon="i-heroicons-magnifying-glass-20-solid"
@@ -41,7 +41,7 @@
               :src="AvatarImage"
               @click="isOpen = true"
               alt="User User"
-              size="lg"
+              size="md"
               class="cursor-pointer"
             />
             <Aside v-model="isOpen" />

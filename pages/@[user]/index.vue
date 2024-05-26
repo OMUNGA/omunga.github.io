@@ -6,7 +6,13 @@
           <img class="w-full h-full object-cover" src="/vue.jpg" alt="" />
         </div>
 
-        <UTabs v-model="selected" :items="items" />
+        <UTabs v-model="selected" :items="items">
+          <template #projetos>
+            <div class="w-full flex flex-col gap-4 p-2">
+              <Card v-for="x in 3" />
+            </div>
+          </template>
+        </UTabs>
       </section>
       <aside class="h-full min-w-72 sticky top-20 hidden md:block">
         <UCard>
@@ -58,19 +64,22 @@
 </template>
 
 <script setup lang="ts">
+import { Card } from "@/components";
+
 const items = [
   {
     label: "Overview",
     slot: "overview",
-    content: "meus artigos aparecem aqui",
+    content: "meu histórico aparece aqui",
+  },
+  {
+    label: "Meus Trabalhos",
+    content: "Area de trabalhos",
+    slot: "projetos",
   },
   {
     label: "Recomendações",
     content: "recomedações aparecem aqui",
-  },
-  {
-    label: "Sobre mim",
-    content: "minhas informações aparecem aqui",
   },
 ];
 

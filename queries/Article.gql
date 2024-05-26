@@ -1,0 +1,35 @@
+query getAll($page: Int = 1, $limit: Int = 5) {
+  FindAllPosts(paginationInput: { page: $page, limit: $limit }) {
+    posts {
+      postID
+      title
+      content
+      cover
+      tags
+      published
+      postLike {
+        postID
+        userID
+        postlikeID
+        createdAt
+      }
+      comment {
+        commentID
+        postID
+        userID
+        content
+        createdAt
+      }
+      user {
+        id
+        name
+        username
+        bio
+      }
+      createdAt
+    }
+    totalPages
+    currentPage
+    totalPosts
+  }
+}

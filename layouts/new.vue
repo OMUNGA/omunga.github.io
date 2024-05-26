@@ -14,7 +14,7 @@
           :src="AvatarImage"
           @click="isOpen = true"
           alt="User User"
-          size="lg"
+          size="md"
           class="cursor-pointer"
         />
         <Aside v-model="isOpen" />

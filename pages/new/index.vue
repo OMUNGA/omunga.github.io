@@ -23,7 +23,25 @@
         </UCard>
       </template>
     </UCard>
-    <Editor :data="[]" ref="editorRef" />
+    <Editor
+      :data="{
+        time: 1716626259244,
+        blocks: [
+          {
+            id: 'gqc_NgZ3oC',
+            type: 'paragraph',
+            data: { text: 'Meu primeiro artigo vue no omunga' },
+          },
+          {
+            id: '9SIpTx-eAV',
+            type: 'list',
+            data: { style: 'ordered', items: ['Vue.js', 'Nuxt.js'] },
+          },
+        ],
+        version: '2.29.1',
+      }"
+      ref="editorRef"
+    />
     <UButton @click="handleOnSave()">Salvar</UButton>
   </UContainer>
 </template>
@@ -38,7 +56,7 @@ const editorRef = ref(null);
 async function handleOnSave() {
   if (editorRef.value) {
     const response = await editorRef.value.save();
-    console.log(response);
+    console.log(JSON.stringify(response));
   }
 }
 </script>
