@@ -1,11 +1,11 @@
 <template>
-  <div class="min-h-screen">
+  <div class="min-h-screen bg-gray-900">
     <Header />
     <UContainer>
       <div class="w-full flex flex-col mt-6 gap-4">
         <div class="w-full">
           <div class="flex items-center gap-4">
-            <UAvatar :src="AvatarImage" size="lg" />
+            <UAvatar :src="user.photo" size="lg" />
             <h1>
               {{ user.name }} <span>({{ user.username }})</span>
             </h1>

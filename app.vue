@@ -16,8 +16,8 @@ body {
   margin: 0;
 }
 
-html.dark {
+/* html.dark {
   background-color: #111827;
   scrollbar-color: #1e293b #111827;
-}
+} */
 </style>

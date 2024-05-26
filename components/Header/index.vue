@@ -1,7 +1,5 @@
 <template>
-  <header
-    class="h-16 z-10 sticky flex w-full shadow-sm bg-white dark:bg-omunga-dark dark:shadow-omunga-shadow/50 top-0"
-  >
+  <header class="h-16 z-10 sticky flex w-full shadow-sm dark:bg-gray-900 top-0">
     <UContainer class="w-full">
       <div class="w-full h-full flex justify-between items-center gap-4">
         <Logo @click="() => navigateTo('/')" class="cursor-pointer" />
@@ -15,7 +13,7 @@
         />
         <template v-if="isAuthenticated">
           <div class="flex items-center gap-4">
-            <div class="flex gap-2">
+            <div class="flex gap-2 items-center">
               <UButton
                 variant="outline"
                 class="dark:hover:bg-transparent hidden sm:flex"
@@ -29,6 +27,8 @@
                 color="gray"
                 class="flex sm:hidden"
               />
+              <ThemePicker />
+
               <UButton
                 icon="i-heroicons-bell-20-solid"
                 variant="ghost"
@@ -38,7 +38,7 @@
             </div>
 
             <UAvatar
-              :src="AvatarImage"
+              :src="user.photo"
               @click="isOpen = true"
               alt="User User"
               size="md"
@@ -65,11 +65,14 @@
               </UButton>
             </div>
             <div class="flex items-center">
+              <ThemePicker />
               <ThemeToggle />
               <SocialMedia />
             </div>
           </div>
           <div class="flex md:hidden">
+            <ThemePicker />
+
             <UButton
               color="gray"
               variant="ghost"
@@ -96,7 +99,7 @@
                   <ULink
                     to="/login"
                     active-class="text-gray-700"
-                    inactive-class="text-omunga-dark dark:text-gray-400 hover:text-primary dark:hover:text-primary"
+                    inactive-class="text-gray-900 dark:text-gray-400 hover:text-primary dark:hover:text-primary"
                   >
                     Entrar
                   </ULink>
@@ -104,7 +107,7 @@
                   <ULink
                     to="/register"
                     active-class="text-gray-700"
-                    inactive-class="text-omunga-dark dark:text-gray-400 hover:text-primary dark:hover:text-primary"
+                    inactive-class="text-gray-900 dark:text-gray-400 hover:text-primary dark:hover:text-primary"
                   >
                     Criar conta
                   </ULink>
@@ -112,7 +115,7 @@
                   <ULink
                     to="https://github.com/OMUNGA"
                     active-class="text-gray-700"
-                    inactive-class="text-omunga-dark dark:text-gray-400 hover:text-primary dark:hover:text-primary"
+                    inactive-class="text-gray-900 dark:text-gray-400 hover:text-primary dark:hover:text-primary"
                   >
                     Github
                   </ULink>
@@ -132,11 +135,17 @@
 </template>
 
 <script setup>
-import { Logo, ThemeToggle, SocialMedia, Modal } from "@/components";
+import {
+  Logo,
+  ThemeToggle,
+  ThemePicker,
+  SocialMedia,
+  Modal,
+} from "@/components";
 import { useAuthStore } from "~/store";
 import AvatarImage from "@/public/avatar.jpg";
 
-const { isAuthenticated } = useAuthStore();
+const { isAuthenticated, user } = storeToRefs(useAuthStore());
 const isOpenModal = ref(false);
 const isOpen = ref(false);
 </script>

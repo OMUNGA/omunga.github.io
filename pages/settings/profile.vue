@@ -24,7 +24,7 @@
     </div>
     <div class="flex flex-col items-center gap-2">
       <div class="w-60 h-60 rounded-full overflow-hidden">
-        <img class="w-full" :src="AvatarImage" alt="" />
+        <img class="w-full" :src="user.photo" alt="" />
       </div>
       <UInput
         :loading="isFileUpdating"
@@ -49,9 +49,10 @@ definePageMeta({
 });
 
 const toast = useToast();
-const { user } = useAuthStore();
+const authStore = useAuthStore();
+const { user } = storeToRefs(authStore);
+const { updateUserStore } = authStore;
 const { updateUser } = useUser();
-const { updateUserStore } = useAuthStore();
 const { imageTo64 } = useFile();
 const isLoading = ref(false);
 const isFileUpdating = ref(false);
@@ -65,8 +66,11 @@ async function updateImage(e: File[]) {
   const imageUrl = await imageTo64(e[0]);
   const response = await updateUser({ photo: imageUrl });
   if (response) {
-    isFileUpdating.value = false;
-    useToast().add({ title: response?.message, timeout: 5000, color: "red" });
+    const onSave = await updateUserStore({ ...state.value, photo: imageUrl });
+    if (onSave) {
+      isFileUpdating.value = false;
+      useToast().add({ title: "foto de perfil atualizada", timeout: 2000 });
+    }
   }
 }
 
