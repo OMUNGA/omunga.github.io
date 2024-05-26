@@ -56,7 +56,6 @@ const editorRef = ref(null);
 async function handleOnSave() {
   if (editorRef.value) {
     const response = await editorRef.value.save();
-    console.log(JSON.stringify(response));
   }
 }
 </script>

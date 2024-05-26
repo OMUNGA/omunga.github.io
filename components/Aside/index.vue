@@ -61,7 +61,7 @@ const links = [
   [
     {
       avatar: {
-        src: UserAvatar,
+        src: user.value.photo,
         alt: "",
       },
       label: user.value.name,

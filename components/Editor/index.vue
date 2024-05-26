@@ -1,5 +1,5 @@
 <template>
-  <div id="editor"></div>
+  <div id="editor" class="prose-sm"></div>
 </template>
 
 <script setup lang="ts">

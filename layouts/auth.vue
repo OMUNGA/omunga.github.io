@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen dark:bg-brand-dark">
+  <div class="min-h-screen dark:bg-gray-900">
     <header class="h-16 flex items-center container mx-auto">
       <div class="w-full flex items-center justify-between">
         <UButton
@@ -12,6 +12,7 @@
         />
 
         <div class="flex gap-2 items-center">
+          <ThemePicker />
           <ThemeToggle />
           <SocialMedia />
         </div>
@@ -24,5 +25,5 @@
 </template>
 
 <script setup lang="ts">
-import { SocialMedia, ThemeToggle } from "@/components";
+import { SocialMedia, ThemeToggle, ThemePicker } from "@/components";
 </script>

@@ -9,6 +9,7 @@ mutation LoginUser($email: String!, $password: String!) {
       email
       bio
       phone
+      photo
     }
   }
 }

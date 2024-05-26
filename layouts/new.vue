@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen dark:bg-brand-dark">
+  <div class="min-h-screen dark:bg-gray-900">
     <header class="h-16 flex items-center container mx-auto">
       <div class="w-full flex items-center justify-between mx-4">
         <UButton
@@ -10,13 +10,16 @@
           icon="i-heroicons-arrow-left-20-solid"
           label="home"
         />
-        <UAvatar
-          :src="AvatarImage"
-          @click="isOpen = true"
-          alt="User User"
-          size="md"
-          class="cursor-pointer"
-        />
+        <div class="flex gap-4 items-center">
+          <ThemePicker />
+          <UAvatar
+            :src="user.photo"
+            @click="isOpen = true"
+            alt="User User"
+            size="md"
+            class="cursor-pointer"
+          />
+        </div>
         <Aside v-model="isOpen" />
       </div>
     </header>
@@ -28,6 +31,8 @@
 
 <script setup lang="ts">
 import AvatarImage from "@/public/avatar.jpg";
+import { useAuthStore } from "~/store";
 
+const { user } = storeToRefs(useAuthStore());
 const isOpen = ref(false);
 </script>
