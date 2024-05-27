@@ -46,7 +46,6 @@
 
 <script setup lang="ts">
 import { useAuthStore } from "~/store";
-import UserAvatar from "@/public/avatar.jpg";
 import { useAuth } from "@/composables";
 import { ThemeToggle } from "@/components";
 
@@ -62,7 +61,7 @@ const links = [
     {
       avatar: {
         src: user.value.photo,
-        alt: "",
+        alt: user.value.name,
       },
       label: user.value.name,
       to: `/@${user.value.username}`,

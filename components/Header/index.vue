@@ -37,13 +37,14 @@
               </UButton>
             </div>
 
-            <UAvatar
-              :src="user.photo"
-              @click="isOpen = true"
-              alt="User User"
-              size="md"
-              class="cursor-pointer"
-            />
+            <button @click="isOpen = true">
+              <UAvatar
+                :src="user.photo"
+                :alt="user.name"
+                size="md"
+                class="cursor-pointer"
+              />
+            </button>
             <Aside v-model="isOpen" />
           </div>
         </template>

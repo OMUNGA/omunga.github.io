@@ -22,7 +22,7 @@ export const useAuthStore = defineStore("auth", {
   actions: {
     async setUser(sign: IUser): Promise<boolean> {
       this.isAuthenticated = !!sign.token;
-      this.user = sign.user;
+      this.user = { ...this.user, ...sign.user };
       this.token = {
         value: sign.token,
         expiredAt: sign.expiresIn,
