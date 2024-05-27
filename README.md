@@ -1,75 +1,61 @@
-# Nuxt 3 Minimal Starter
+# Omunga ( Angolan IT article Platform )
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Omunga is an open source project created with the main objective of encouraging the sharing of content by IT professionals in Angola. The app allows users to post articles about IT, comment, like, search, and create discussion forums.
 
-## Setup
+## Key Features
 
-Make sure to install the dependencies:
+- Create an account
+- Publish articles
+- Comment on articles
+- Like articles
+- Follow users
+- Search articles
+- Create and participate in discussion forums
 
-```bash
-# npm
-npm install
+## Technologies Used
 
-# pnpm
-pnpm install
+- **Frontend Framework**: Vue 3 with Nuxt 3 and TypeScript
+- **Store**: Pinia
+- **UI Library**: Nuxt UI
+- **CSS Framework**: Tailwindcss
 
-# yarn
-yarn install
+## Prerequisites
 
-# bun
-bun install
-```
+- Text editor
+- Node.js installed
 
-## Development Server
+## Installation
 
-Start the development server on `http://localhost:3000`:
+1. Clone the repository:
 
-```bash
-# npm
-npm run dev
+   ```bash
+   git clone https://github.com/OMUNGA/omunga.github.io.git
+   cd omunga.github.io
+   ```
 
-# pnpm
-pnpm run dev
+2. Install dependencies:
 
-# yarn
-yarn dev
+   ```bash
+   npm install
+   ```
 
-# bun
-bun run dev
-```
+3. Start the application:
+   ```bash
+   npm run dev
+   ```
 
-## Production
+## Contribution
 
-Build the application for production:
+Please make sure to read the [Contributing Guide](./CONTRIBUTING.md) before making a pull request.
 
-```bash
-# npm
-npm run build
+Thank you to all the people who already contributed to Omunga!
 
-# pnpm
-pnpm run build
+<a href="https://github.com/OMUNGA/omunga.github.io/graphs/contributors">
+<img src="https://contrib.rocks/image?repo=OMUNGA/omunga.github.io" width="128" height="128" />
+</a>
 
-# yarn
-yarn build
+## License
 
-# bun
-bun run build
-```
+[MIT](https://opensource.org/license/MIT)
 
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+Copyright (c) 2024-present
