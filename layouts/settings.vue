@@ -5,7 +5,7 @@
       <div class="w-full flex flex-col mt-6 gap-4">
         <div class="w-full">
           <div class="flex items-center gap-4">
-            <UAvatar :src="user.photo" size="lg" />
+            <UAvatar :src="user.photo" :alt="user.name" size="lg" />
             <h1>
               {{ user.name }} <span>({{ user.username }})</span>
             </h1>

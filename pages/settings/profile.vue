@@ -89,7 +89,7 @@ async function onSubmit() {
 }
 
 watchEffect(() => {
-  state.value = { ...user };
+  state.value = { ...user.value };
   delete state.value.id;
 });
 </script>
