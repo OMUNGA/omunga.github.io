@@ -6,6 +6,15 @@
   <UNotifications />
 </template>
 
+<script setup lang="ts">
+import { useAppStore } from "@/store";
+const appStore = useAppStore();
+
+onBeforeMount(() => {
+  appStore.updateThemeApp();
+});
+</script>
+
 <style>
 * {
   font-family: Roboto;

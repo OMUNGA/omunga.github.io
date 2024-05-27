@@ -1,3 +1,3 @@
 import { useAuthStore } from "./auth";
-
-export { useAuthStore };
+import { useAppStore } from "./app";
+export { useAuthStore, useAppStore };
