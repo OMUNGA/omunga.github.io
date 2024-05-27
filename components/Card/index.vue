@@ -8,7 +8,9 @@
             class="text-slate-900 dark:text-white flex flex-col justify-around text-black/50"
           >
             <span>{{ article.user.name }}</span>
-            <span class="text-xs">{{ article.createdAt }}</span>
+            <span class="text-xs">{{
+              formatDistance(article.createdAt, new Date(), { addSuffix: true })
+            }}</span>
           </div>
         </div>
         <div
@@ -55,6 +57,7 @@
 </template>
 
 <script setup lang="ts">
+import { formatDistance } from "date-fns";
 import { CardSkeleton } from "@/components";
 import AvatarImage from "@/public/avatar.jpg";
 import type { IArticle } from "@/types/article";
