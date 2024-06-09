@@ -26,7 +26,13 @@
 
     <Editor ref="editorRef" />
     <div class="flex gap-4 lg:w-full lg:max-w-2xl lg:mx-auto mx-2 pb-4">
-      <UButton size="lg" @click="handleOnSave(true)">
+      <UButton
+        size="lg"
+        @click="handleOnSave(true)"
+        loading-icon="i-carbon-circle-dash"
+        :loading="loadingButtons.publish"
+        :disabled="loadingButtons.draft"
+      >
         <span class="text-white"> publicar </span>
       </UButton>
       <UButton
@@ -34,6 +40,9 @@
         variant="ghost"
         color="primary"
         @click="handleOnSave(false)"
+        loading-icon="i-carbon-circle-dash"
+        :loading="loadingButtons.draft"
+        :disabled="loadingButtons.publish"
         >Salvar Rascunho</UButton
       >
     </div>
@@ -43,12 +52,13 @@
 <script setup lang="ts">
 import { Editor } from "@/components";
 import { useArticle } from "@/composables";
+import { useAuthStore } from "@/store";
 
 definePageMeta({
   layout: "new",
 });
 const { createArticle } = useArticle();
-
+const username = useAuthStore().user.username;
 interface ICreateArticle {
   title: string;
   description: string;
@@ -58,6 +68,10 @@ interface ICreateArticle {
   published: boolean;
 }
 
+const loadingButtons = reactive({
+  publish: false,
+  draft: false,
+});
 const editorRef = ref(null);
 const data = ref<ICreateArticle>({
   title: "",
@@ -70,11 +84,20 @@ const data = ref<ICreateArticle>({
 });
 async function handleOnSave(published: boolean) {
   data.value.published = published;
+  if (published == true) {
+    loadingButtons.publish = true;
+  } else {
+    loadingButtons.draft = true;
+  }
   if (editorRef.value) {
     const content = await editorRef.value.save();
     if (content) {
       data.value.content = JSON.stringify(content);
-      await createArticle({ ...data.value });
+      const response = await createArticle({ ...data.value });
+      if (response?.statusCode == 200) {
+        useToast().add({ title: "artigo criado", timeout: 3000 });
+        navigateTo(`/@${username}/${response.data.slug}`);
+      }
     }
   }
 }

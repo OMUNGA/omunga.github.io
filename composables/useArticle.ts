@@ -1,7 +1,7 @@
 import type { UpdatePostDto } from "#gql";
 import { useResponse } from "@/composables";
 import type {
-  IUpdateArticle,
+  ICreateArticleResponse,
   IGetAllArticleResponse,
   IGetOneArticleResponse,
 } from "@/types";
@@ -81,7 +81,11 @@ export function useArticle() {
     try {
       const response = await GqlCreateArticle({ ...data });
       console.log({ response });
-      return setResponse(200, "success", response.createPost);
+      return setResponse(
+        200,
+        "success",
+        response.createPost
+      ) as ICreateArticleResponse;
     } catch (error) {
       return getResponse(error);
     }
@@ -91,7 +95,6 @@ export function useArticle() {
     try {
       const response = await GqlUpdateArticle({ id, data });
       if (response.updatePost) {
-        const id = response.updatePost.postID;
         return setResponse(200, "success", response.updatePost);
       }
     } catch (error) {
