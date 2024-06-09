@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gray-900">
+  <div class="min-h-screen dark:bg-gray-900">
     <Header />
     <UContainer>
       <div class="w-full flex flex-col mt-6 gap-4">

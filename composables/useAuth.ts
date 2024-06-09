@@ -16,22 +16,16 @@ export function useAuth() {
         });
         return setResponse(200, "success", response.sigIn) as ILoginResponse;
       }
-    } catch (err) {
-      const error = getResponse(err) as ILoginResponse;
-      return {
-        ...error,
-      };
+    } catch (error) {
+      return getResponse(error) as ILoginResponse;
     }
   }
   async function logout() {
     try {
       useGqlToken(null);
       return setResponse(200, "success", user) as ILogoutResponse;
-    } catch (err) {
-      const error = getResponse(err) as ILogoutResponse;
-      return {
-        ...error,
-      };
+    } catch (error) {
+      return getResponse(error) as ILogoutResponse;
     }
   }
 

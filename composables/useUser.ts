@@ -1,4 +1,9 @@
-import type { IRegisterRequest, IRegisterResponse, IUserSchema } from "@/types";
+import type {
+  IRegisterRequest,
+  IRegisterResponse,
+  IUserResponse,
+  IUserSchema,
+} from "@/types";
 import { useResponse } from "@/composables";
 
 const { getResponse, setResponse } = useResponse();
@@ -14,8 +19,8 @@ export function useUser() {
       if (response.signup) {
         return setResponse(200, "success", {});
       }
-    } catch (err) {
-      return getResponse(err);
+    } catch (error) {
+      return getResponse(error);
     }
   }
 
@@ -26,10 +31,23 @@ export function useUser() {
         const id = response.updateUser.id;
         return setResponse(200, "success", { id });
       }
-    } catch (err) {
-      return getResponse(err);
+    } catch (error) {
+      return getResponse(error);
     }
   }
 
-  return { register, updateUser };
+  async function getOneUser(username: string) {
+    try {
+      const user = await GqlGetOneUser({ username });
+      const posts = await GqlGetAllUserArticle({ username });
+      return setResponse(200, "success", {
+        user: { ...user.FindOneUser },
+        posts: { ...posts.FindPostByUserID },
+      }) as IUserResponse;
+    } catch (error) {
+      return getResponse(error) as IUserResponse;
+    }
+  }
+
+  return { register, updateUser, getOneUser };
 }

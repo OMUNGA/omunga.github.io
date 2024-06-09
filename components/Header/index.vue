@@ -2,7 +2,9 @@
   <header class="h-16 z-10 sticky flex w-full shadow-sm dark:bg-gray-900 top-0">
     <UContainer class="w-full">
       <div class="w-full h-full flex justify-between items-center gap-4">
-        <Logo @click="() => navigateTo('/')" class="cursor-pointer" />
+        <ULink to="/">
+          <Logo />
+        </ULink>
         <UInput
           class="hidden md:block w-full max-w-lg"
           icon="i-heroicons-magnifying-glass-20-solid"

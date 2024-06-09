@@ -70,7 +70,7 @@ const items = [
 
 const route = useRoute();
 const router = useRouter();
-const { getAll } = useArticle();
+const { getAllArticle } = useArticle();
 const posts = ref<IGetAllArticle>();
 const selected = computed({
   get() {
@@ -90,7 +90,7 @@ const selected = computed({
 });
 
 onBeforeMount(async () => {
-  const response = await getAll();
+  const response = await getAllArticle();
   if (response.statusCode == 200) {
     posts.value = response.data;
   }

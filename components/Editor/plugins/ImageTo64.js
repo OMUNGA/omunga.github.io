@@ -7,6 +7,10 @@ export default class ImageTo64 {
     };
   }
 
+  static get isReadOnlySupported() {
+    return true;
+  }
+
   render() {
     this.input = document.createElement('input')
     this.input.setAttribute("type", "file")
@@ -35,5 +39,9 @@ export default class ImageTo64 {
     return {
       url: blockContent.currentSrc
     }
+  }
+
+  constructor({ readOnly }) {
+    this.readOnly = readOnly
   }
 }

@@ -44,3 +44,13 @@ mutation UpdateUser($user: UpdateUserDTO!) {
     id
   }
 }
+
+query GetOneUser($username: String!) {
+  FindOneUser(userName: $username) {
+    id
+    username
+    name
+    photo
+    bio
+  }
+}

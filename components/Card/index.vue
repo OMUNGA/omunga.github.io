@@ -14,9 +14,14 @@
           </div>
         </div>
         <div
-          class="block sm:hidden md:block lg:hidden rounded overflow-hidden w-full h-[150px]"
+          class="block cursor-pointer sm:hidden md:block lg:hidden rounded overflow-hidden w-full h-[150px]"
         >
-          <img class="object-cover w-full h-full" src="/project.png" alt="" />
+          <ULink
+            class="w-full h-full"
+            :to="`/@${article.user.username}/${article.slug}`"
+          >
+            <img class="object-cover w-full h-full" src="/project.png" alt="" />
+          </ULink>
         </div>
         <div class="">
           <span class="font-bold text-2xl text-slate-900 dark:text-white">{{
@@ -45,8 +50,13 @@
         </div>
       </div>
       <div class="hidden sm:flex md:hidden lg:flex items-center">
-        <div class="rounded overflow-hidden">
-          <img class="object-cover w-full" src="/project.png" alt="" />
+        <div class="rounded overflow-hidden cursor-pointer">
+          <ULink
+            class="w-full h-full"
+            :to="`/@${article.user.username}/${article.slug}`"
+          >
+            <img class="object-cover w-full" src="/project.png" alt="" />
+          </ULink>
         </div>
       </div>
     </div>
