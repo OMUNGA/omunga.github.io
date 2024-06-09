@@ -1,22 +1,91 @@
 import { useResponse } from "@/composables";
-import type { IGetAllArticle, IGetAllArticleResponse } from "@/types";
+import type { IGetAllArticleResponse, IGetOneArticleResponse } from "@/types";
+
+interface ICreateArticle {
+  title: string;
+  description: string;
+  cover: string;
+  content: string;
+  tags: string | string[];
+  published: boolean;
+}
+
 export function useArticle() {
   const { getResponse, setResponse } = useResponse();
 
-  async function getAll(page: number = 1, limit: number = 5) {
+  async function getAllArticle(page: number = 1, limit: number = 5) {
     try {
-      const response = await GqlGetAll({ page: page, limit: limit });
+      const response = await GqlGetAllArticle({ page: page, limit: limit });
       return setResponse(
         200,
-        "sucess",
+        "success",
         response.FindAllPosts
       ) as IGetAllArticleResponse;
-    } catch (err) {
-      return getResponse(err) as IGetAllArticleResponse;
+    } catch (error) {
+      return getResponse(error) as IGetAllArticleResponse;
     }
   }
 
-  async function getOne(id: String) {}
+  async function getAllUserArticle(
+    username: string,
+    page: number = 1,
+    limit: number = 5
+  ) {
+    try {
+      const response = await GqlGetAllUserArticle({ page, limit, username });
+      return setResponse(
+        200,
+        "success",
+        response.FindPostByUserID
+      ) as IGetAllArticleResponse;
+    } catch (error) {
+      return getResponse(error) as IGetAllArticleResponse;
+    }
+  }
 
-  return { getAll };
+  async function getAllUnpublishedArticle(page: number = 1, limit: number = 5) {
+    try {
+      const response = await GqlGetAllUnpublishedArticle({ page, limit });
+      return setResponse(
+        200,
+        "success",
+        response.FindAllUnpublishedPosts
+      ) as IGetAllArticleResponse;
+    } catch (error) {
+      return getResponse(error) as IGetAllArticleResponse;
+    }
+  }
+
+  async function getOneArticle(username: string, slug: string) {
+    try {
+      const response = await GqlGetOnePostByUserAndTitle({
+        username,
+        slug,
+      });
+      return setResponse(
+        200,
+        "success",
+        response.findPostsByUserAndTitle
+      ) as IGetOneArticleResponse;
+    } catch (error) {
+      return getResponse(error) as IGetOneArticleResponse;
+    }
+  }
+
+  async function createArticle(data: ICreateArticle) {
+    try {
+      const response = await GqlCreateArticle({ ...data });
+      console.log({ response });
+      return setResponse(200, "success", response.createPost);
+    } catch (error) {
+      return getResponse(error);
+    }
+  }
+  return {
+    getAllArticle,
+    createArticle,
+    getAllUserArticle,
+    getOneArticle,
+    getAllUnpublishedArticle,
+  };
 }

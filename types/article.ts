@@ -4,6 +4,7 @@ import type { IUserSchema } from "./user";
 export interface IArticle {
   postID: string;
   title: string;
+  slug: string;
   content: string;
   cover: string;
   tags: string[];
@@ -24,4 +25,8 @@ export interface IGetAllArticle {
 
 export interface IGetAllArticleResponse extends IResponse {
   data: IGetAllArticle;
+}
+
+export interface IGetOneArticleResponse extends IResponse {
+  data: IArticle;
 }

@@ -10,11 +10,11 @@ export default defineNuxtRouteMiddleware((to) => {
     !isAuthenticated &&
     (to.name == "new" || to.meta.layout == "settings")
   ) {
-    // throw createError({
-    //   statusCode: 404,
-    //   statusMessage: "Page Not Found",
-    // });
+    throw createError({
+      statusCode: 404,
+      statusMessage: "Page Not Found",
+    });
 
-    return navigateTo("/");
+    // return navigateTo("/");
   }
 });

@@ -11,6 +11,7 @@ import Editor from "./Editor/index.vue";
 import Card from "./Card/index.vue";
 import CardSkeleton from "./CardSkeleton/index.vue";
 import ThemePicker from "./ThemePicker/index.vue";
+import Loading from "./Loading/index.vue";
 
 export {
   Topics,
@@ -26,4 +27,5 @@ export {
   Card,
   CardSkeleton,
   ThemePicker,
+  Loading,
 };

@@ -1,17 +1,27 @@
 <template>
   <UContainer>
-    <div class="flex justify-between mt-6 mx-2">
-      <section class="w-full flex flex-col md:mr-12 gap-9">
+    <div v-if="isFetching" class="flex justify-between mt-6 mx-2">
+      <div class="flex gap-4 items-center">
+        <USkeleton class="h-12 w-12" :ui="{ rounded: 'rounded-full' }" />
+        <div class="space-y-2">
+          <USkeleton class="h-4 w-[250px]" />
+          <USkeleton class="h-4 w-[200px]" />
+        </div>
+      </div>
+    </div>
+    <div v-else class="flex justify-between mt-6 mx-2">
+      <section class="w-full flex flex-col md:mr-12 gap-4">
         <div class="w-full flex flex-wrap gap-2 justify-between items-center">
           <div class="flex gap-4 items-center">
-            <UAvatar alt="Miguel Domingos" size="lg" />
+            <UAvatar :src="data?.user.photo" :alt="data?.user.name" size="lg" />
             <div
               class="text-slate-900 dark:text-white flex flex-col justify-around text-black/50"
             >
-              <span>Miguel Domingos</span>
-              <span class="text-xs">20 Abril 2024</span>
+              <span>{{ data?.user.name }}</span>
+              <span class="text-xs">{{ data?.createdAt }}</span>
             </div>
           </div>
+
           <div class="flex gap-1 md:hidden">
             <UButton
               icon="i-carbon-logo-github"
@@ -34,23 +44,35 @@
           </div>
         </div>
 
-        <span class="text-slate-900 dark:text-white">
-          artigo sobre {{ article }} aqui
-        </span>
+        <div class="flex flex-col">
+          <div class="prose-sm">
+            <h1>{{ data?.title }}</h1>
+          </div>
+          <div class="w-full h-full">
+            <Editor
+              :data="stringToObject(data?.content as string)"
+              :readOnly="true"
+            />
+          </div>
+        </div>
       </section>
       <aside class="h-full min-w-72 sticky top-19.5 hidden md:block">
         <div class="w-full flex flex-col gap-4">
           <UCard>
             <div class="w-full flex flex-col justify-start items-center gap-2">
-              <UAvatar src="" alt="Miguel Domingos" size="3xl" />
+              <UAvatar
+                :src="data?.user.photo"
+                :alt="data?.user.name"
+                size="3xl"
+              />
               <div class="flex flex-col items-center w-full gap-4">
                 <div class="w-full flex flex-col items-center gap-1">
-                  <span class="text-slate-900 dark:text-white"
-                    >Miguel Domingos</span
-                  >
-                  <span class="text-slate-900 dark:text-white opacity-80"
-                    >Web Developer | Vue.js | Nuxt.js</span
-                  >
+                  <span class="text-slate-900 text-center dark:text-white">{{
+                    data?.user.name
+                  }}</span>
+                  <span class="text-slate-900 dark:text-white opacity-80">{{
+                    data?.user.bio
+                  }}</span>
                 </div>
                 <div class="flex gap-2 text-slate-900 dark:text-white">
                   <UButton
@@ -89,7 +111,7 @@
 
           <div class="w-full">
             <span class="text-slate-900 dark:text-white"
-              >Mais artigos de Miguel</span
+              >Mais artigos de @{{ data?.user.username }}</span
             >
             <div class="w-full flex flex-col items-center mt-4">
               <span class="text-slate-900 dark:text-white opacity-50"
@@ -104,5 +126,26 @@
 </template>
 
 <script setup lang="ts">
-const { article } = useRoute().params;
+import { Editor } from "@/components";
+import { useArticle } from "@/composables";
+import type { IArticle } from "@/types";
+
+const { user, article } = useRoute().params;
+const { getOneArticle } = useArticle();
+const data = ref<IArticle>();
+const isFetching = ref(true);
+
+function stringToObject(data: string) {
+  return Function(`'use strict'; return (${data})`)();
+}
+
+onBeforeMount(async () => {
+  const response = await getOneArticle(user as string, article as string);
+  if (response.statusCode == 200) {
+    isFetching.value = false;
+    data.value = response.data;
+  } else {
+    useToast().add({ title: response.message, timeout: 5000, color: "red" });
+  }
+});
 </script>

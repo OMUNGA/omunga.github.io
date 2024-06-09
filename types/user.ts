@@ -1,3 +1,4 @@
+import type { IGetAllArticle } from "./article";
 import type { IResponse } from "./http";
 
 export interface IUser {
@@ -14,6 +15,15 @@ export interface IUserSchema {
   bio: string;
   phone: string;
   photo?: string;
+}
+
+export interface IUserResponse extends IResponse {
+  data: IUserDataResponse;
+}
+
+interface IUserDataResponse {
+  user: IUserSchema;
+  posts: IGetAllArticle;
 }
 
 export interface ILoginRequest {

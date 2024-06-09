@@ -1,8 +1,85 @@
-query getAll($page: Int = 1, $limit: Int = 5) {
+query getAllArticle($page: Int = 1, $limit: Int = 5) {
   FindAllPosts(paginationInput: { page: $page, limit: $limit }) {
     posts {
       postID
       title
+      content
+      cover
+      tags
+      slug
+      published
+      postLike {
+        postID
+        userID
+        postlikeID
+        createdAt
+      }
+      comment {
+        commentID
+        postID
+        userID
+        content
+        createdAt
+      }
+      user {
+        id
+        name
+        username
+        bio
+      }
+      createdAt
+    }
+    totalPages
+    currentPage
+    totalPosts
+  }
+}
+
+query getAllUserArticle($page: Int = 1, $limit: Int = 20, $username: String!) {
+  FindPostByUserID(
+    paginationInput: { page: $page, limit: $limit }
+    userName: $username
+  ) {
+    posts {
+      postID
+      title
+      slug
+      content
+      cover
+      tags
+      published
+      postLike {
+        postID
+        userID
+        postlikeID
+        createdAt
+      }
+      comment {
+        commentID
+        postID
+        userID
+        content
+        createdAt
+      }
+      user {
+        id
+        name
+        username
+      }
+      createdAt
+    }
+    totalPages
+    currentPage
+    totalPosts
+  }
+}
+
+query getAllUnpublishedArticle($page: Int = 1, $limit: Int = 20) {
+  FindAllUnpublishedPosts(paginationInput: { page: $page, limit: $limit }) {
+    posts {
+      postID
+      title
+      slug
       content
       cover
       tags
@@ -31,5 +108,60 @@ query getAll($page: Int = 1, $limit: Int = 5) {
     totalPages
     currentPage
     totalPosts
+  }
+}
+
+mutation createArticle(
+  $title: String!
+  $description: String!
+  $cover: String!
+  $content: String!
+  $tags: [String!]!
+  $published: Boolean
+) {
+  createPost(
+    data: {
+      description: $description
+      title: $title
+      content: $content
+      cover: $cover
+      tags: $tags
+      published: $published
+    }
+  ) {
+    postID
+    title
+    slug
+    content
+    tags
+    cover
+    createdAt
+    published
+  }
+}
+
+mutation getOnePostByUserAndTitle($username: String!, $slug: String!) {
+  findPostsByUserAndTitle(data: { userName: $username, slug: $slug }) {
+    postID
+    title
+    content
+    slug
+    user {
+      id
+      name
+      username
+      bio
+      photo
+    }
+    tags
+    createdAt
+    postLike {
+      postlikeID
+      userID
+    }
+    comment {
+      commentID
+      userID
+    }
   }
 }

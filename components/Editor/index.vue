@@ -9,9 +9,19 @@ import List from "@editorjs/list";
 import { ImageTo64 } from "./plugins";
 import { onMounted, ref } from "vue";
 
-const props = defineProps(["data"]);
+interface IEditorProps {
+  data?: {
+    blocks: [];
+  };
+  readOnly?: boolean;
+}
+
+const props = withDefaults(defineProps<IEditorProps>(), {
+  readOnly: false,
+});
 
 const editor = new EditorJS({
+  readOnly: props.readOnly,
   holder: "editor",
   placeholder: "Start typing here...",
   // autofocus: true,
@@ -29,10 +39,8 @@ const editor = new EditorJS({
     },
     image: ImageTo64,
   },
-  // data: { blocks: [] },
-  data: { ...props.data },
+  data: props.data,
 });
-
 async function save() {
   try {
     return await editor.save();
@@ -43,7 +51,6 @@ async function save() {
 
 async function setReadOnly() {
   await editor.readOnly.toggle();
-  console.log(editor.readOnly.isEnabled);
 }
 
 defineExpose({
@@ -150,5 +157,9 @@ img {
   .codex-editor--narrow .codex-editor__redactor {
     margin-right: 0;
   }
+}
+
+.codex-editor__redactor {
+  padding-bottom: 200px !important;
 }
 </style>
