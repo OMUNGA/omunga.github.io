@@ -53,7 +53,6 @@
           color="primary"
           >Salvar Rascunho</UButton
         >
-        <UButton size="lg" variant="ghost" color="primary">back</UButton>
       </div>
     </template>
   </UContainer>
@@ -98,7 +97,7 @@ async function onSubmit(isPublished: boolean) {
       );
       if (response?.statusCode == 200) {
         useToast().add({ title: "artigo atualizado", timeout: 3000 });
-        navigateTo(".");
+        navigateTo(`/@${user}/${article}`);
       }
     }
   }
