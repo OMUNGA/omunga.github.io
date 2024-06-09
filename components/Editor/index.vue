@@ -6,8 +6,9 @@
 import EditorJS from "@editorjs/editorjs";
 import Header from "@editorjs/header";
 import List from "@editorjs/list";
-import { ImageTo64 } from "./plugins";
+import { CustomImageTool } from "./plugins";
 import { onMounted, ref } from "vue";
+import { useFile } from "@/composables";
 
 interface IEditorProps {
   data?: {
@@ -19,6 +20,8 @@ interface IEditorProps {
 const props = withDefaults(defineProps<IEditorProps>(), {
   readOnly: false,
 });
+
+const { uploadImage } = useFile();
 
 const editor = new EditorJS({
   readOnly: props.readOnly,
@@ -37,7 +40,16 @@ const editor = new EditorJS({
       class: List,
       inlineToolbar: true,
     },
-    image: ImageTo64,
+    image: {
+      class: CustomImageTool as any,
+      config: {
+        uploader: {
+          async uploadByFile(file: File) {
+            return await uploadImage(file);
+          },
+        },
+      },
+    },
   },
   data: props.data,
 });
@@ -160,6 +172,6 @@ img {
 }
 
 .codex-editor__redactor {
-  padding-bottom: 200px !important;
+  padding-bottom: 150px !important;
 }
 </style>

@@ -3,11 +3,15 @@
     <div v-if="article" class="w-full flex gap-4">
       <div class="w-full flex flex-col gap-2">
         <div class="w-full flex gap-4">
-          <UAvatar :src="AvatarImage" alt="User User" size="lg" />
+          <ULink :to="`/@${article.user.username}`">
+            <UAvatar :src="AvatarImage" alt="User User" size="lg" />
+          </ULink>
           <div
-            class="text-slate-900 dark:text-white flex flex-col justify-around text-black/50"
+            class="text-slate-900 dark:text-white flex flex-col justify-center text-black/50"
           >
-            <span>{{ article.user.name }}</span>
+            <ULink :to="`/@${article.user.username}`">
+              <span>{{ article.user.name }}</span>
+            </ULink>
             <span class="text-xs">{{
               formatDistance(article.createdAt, new Date(), { addSuffix: true })
             }}</span>
@@ -20,7 +24,11 @@
             class="w-full h-full"
             :to="`/@${article.user.username}/${article.slug}`"
           >
-            <img class="object-cover w-full h-full" src="/project.png" alt="" />
+            <img
+              class="object-cover w-full h-full"
+              :src="article.cover || '/project.png'"
+              alt=""
+            />
           </ULink>
         </div>
         <div class="">
@@ -30,9 +38,7 @@
         </div>
         <div class="">
           <span class="text-slate-600 dark:text-slate-400 font-light">
-            In the fast-evolving landscape of web development, staying abreast
-            of the latest tools can significantly impact the efficiency,
-            quality, and innovation of your projects.
+            {{ article.description }}
           </span>
         </div>
         <div
@@ -50,12 +56,16 @@
         </div>
       </div>
       <div class="hidden sm:flex md:hidden lg:flex items-center">
-        <div class="rounded overflow-hidden cursor-pointer">
+        <div class="rounded overflow-hidden cursor-pointer w-[150px] h-[150px]">
           <ULink
             class="w-full h-full"
             :to="`/@${article.user.username}/${article.slug}`"
           >
-            <img class="object-cover w-full" src="/project.png" alt="" />
+            <img
+              class="object-cover w-full h-full"
+              :src="article.cover"
+              alt=""
+            />
           </ULink>
         </div>
       </div>

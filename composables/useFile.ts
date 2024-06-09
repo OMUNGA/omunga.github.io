@@ -1,24 +1,35 @@
+import {
+  getDownloadURL,
+  ref as firebaseRef,
+  uploadBytes,
+} from "firebase/storage";
+import { storage } from "@/services/firebase";
+
 export function useFile() {
-  async function imageTo64(file: File): Promise<string> {
-    return new Promise((resolve, reject) => {
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (e: ProgressEvent<FileReader>) => {
-          if (e.target) {
-            resolve(e.target.result as string);
-          } else {
-            reject(new Error("Failed to read file"));
-          }
-        };
-        reader.onerror = (e) => {
-          reject(new Error("FileReader error"));
-        };
-        reader.readAsDataURL(file);
-      } else {
-        resolve("");
+  async function uploadImage(file: File) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const mountainsRef = firebaseRef(
+          storage,
+          `/images/${crypto.randomUUID()}-${
+            file.name.split(".")[file.name.split(".").length - 1]
+          }`
+        );
+        const snapshot = await uploadBytes(mountainsRef, file);
+        const url = await getDownloadURL(snapshot.ref);
+
+        // Resolve with the image data required by EditorJS
+        resolve({
+          success: 1,
+          file: {
+            url,
+          },
+        });
+      } catch (error) {
+        reject(error);
       }
     });
   }
 
-  return { imageTo64 };
+  return { uploadImage };
 }

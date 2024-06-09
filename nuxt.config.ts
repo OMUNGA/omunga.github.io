@@ -28,7 +28,6 @@ export default defineNuxtConfig({
         display: "swap",
       },
     ],
-    // "@unocss/nuxt",
     "@nuxt/image",
     "nuxt-graphql-client",
     "@pinia/nuxt",

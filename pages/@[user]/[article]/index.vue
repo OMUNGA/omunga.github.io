@@ -22,7 +22,14 @@
             </div>
           </div>
 
-          <div class="flex gap-1 md:hidden">
+          <div
+            v-if="
+              loggedUser.username == user && route.name != '@user-article-edit'
+            "
+          >
+            <UButton label="editar" color="white" variant="solid" to="./edit" />
+          </div>
+          <div v-if="loggedUser.username != user" class="flex gap-1 md:hidden">
             <UButton
               icon="i-carbon-logo-github"
               variant="ghost"
@@ -42,6 +49,14 @@
               size="md"
             />
           </div>
+        </div>
+        <div class="w-full h-64 overflow-hidden">
+          <img
+            :src="data.cover"
+            v-if="data"
+            alt=""
+            class="w-full h-full object-cover"
+          />
         </div>
 
         <div class="flex flex-col">
@@ -128,16 +143,17 @@
 <script setup lang="ts">
 import { Editor } from "@/components";
 import { useArticle } from "@/composables";
+import { useAuthStore } from "@/store";
+import { stringToObject } from "@/helpers";
 import type { IArticle } from "@/types";
 
 const { user, article } = useRoute().params;
 const { getOneArticle } = useArticle();
+const loggedUser = useAuthStore().user;
 const data = ref<IArticle>();
 const isFetching = ref(true);
 
-function stringToObject(data: string) {
-  return Function(`'use strict'; return (${data})`)();
-}
+const route = useRoute();
 
 onBeforeMount(async () => {
   const response = await getOneArticle(user as string, article as string);
