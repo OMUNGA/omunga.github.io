@@ -27,6 +27,10 @@ export interface IArticle {
   postLike: [];
 }
 
+export interface ICreateArticleResponse extends IResponse {
+  data: IArticle;
+}
+
 export interface IGetAllArticle {
   posts: IArticle[];
   totalPages: number;

@@ -43,7 +43,13 @@
 
       <Editor ref="editorRef" :data="stringToObject(data?.content as string)" />
       <div class="flex gap-4 lg:w-full lg:max-w-2xl lg:mx-auto mx-2 pb-4">
-        <UButton size="lg" @click="onSubmit(true)">
+        <UButton
+          size="lg"
+          @click="onSubmit(true)"
+          loading-icon="i-carbon-circle-dash"
+          :loading="loadingButtons.publish"
+          :disabled="loadingButtons.draft"
+        >
           <span class="text-white"> publicar </span>
         </UButton>
         <UButton
@@ -51,6 +57,9 @@
           size="lg"
           variant="ghost"
           color="primary"
+          loading-icon="i-carbon-circle-dash"
+          :loading="loadingButtons.draft"
+          :disabled="loadingButtons.publish"
           >Salvar Rascunho</UButton
         >
       </div>
@@ -66,6 +75,11 @@ import { stringToObject } from "@/helpers";
 
 definePageMeta({
   layout: "new",
+});
+
+const loadingButtons = reactive({
+  publish: false,
+  draft: false,
 });
 const { getOneArticle, updateArticle } = useArticle();
 
@@ -84,8 +98,13 @@ onBeforeMount(async () => {
   }
 });
 
-async function onSubmit(isPublished: boolean) {
-  data.value.published = isPublished;
+async function onSubmit(published: boolean) {
+  data.value.published = published;
+  if (published == true) {
+    loadingButtons.publish = true;
+  } else {
+    loadingButtons.draft = true;
+  }
 
   if (editorRef.value) {
     const content = await editorRef.value.save();
