@@ -1,10 +1,21 @@
 import type { IResponse } from "./http";
 import type { IUserSchema } from "./user";
 
+export interface IUpdateArticle {
+  content: string;
+  cover: string;
+  description: string;
+  published: Boolean;
+  slug: string;
+  tags: string | string[];
+  title: string;
+}
+
 export interface IArticle {
   postID: string;
   title: string;
   slug: string;
+  description: string;
   content: string;
   cover: string;
   tags: string[];

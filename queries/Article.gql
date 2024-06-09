@@ -7,6 +7,7 @@ query getAllArticle($page: Int = 1, $limit: Int = 5) {
       cover
       tags
       slug
+      description
       published
       postLike {
         postID
@@ -44,6 +45,7 @@ query getAllUserArticle($page: Int = 1, $limit: Int = 20, $username: String!) {
       postID
       title
       slug
+      description
       content
       cover
       tags
@@ -79,6 +81,7 @@ query getAllUnpublishedArticle($page: Int = 1, $limit: Int = 20) {
     posts {
       postID
       title
+      description
       slug
       content
       cover
@@ -132,6 +135,7 @@ mutation createArticle(
     postID
     title
     slug
+    description
     content
     tags
     cover
@@ -144,6 +148,8 @@ mutation getOnePostByUserAndTitle($username: String!, $slug: String!) {
   findPostsByUserAndTitle(data: { userName: $username, slug: $slug }) {
     postID
     title
+    cover
+    description
     content
     slug
     user {
@@ -163,5 +169,19 @@ mutation getOnePostByUserAndTitle($username: String!, $slug: String!) {
       commentID
       userID
     }
+  }
+}
+
+mutation updateArticle($id: String!, $data: UpdatePostDto!) {
+  updatePost(id: $id, data: $data) {
+    postID
+    title
+    slug
+    description
+    content
+    tags
+    cover
+    createdAt
+    published
   }
 }

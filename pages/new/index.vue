@@ -61,7 +61,7 @@ interface ICreateArticle {
 const editorRef = ref(null);
 const data = ref<ICreateArticle>({
   title: "",
-  description: "",
+  description: "descrição de exemplo",
   cover:
     "https://uploads.toptal.io/blog/image/125920/toptal-blog-image-1524038149943-65cd6aca270907a12410a09b207714f2.png",
   content: "",

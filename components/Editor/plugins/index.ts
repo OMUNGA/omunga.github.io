@@ -1,3 +1,3 @@
-import ImageTo64 from "./ImageTo64.js";
+import CustomImageTool from "./customImageTool";
 
-export { ImageTo64 };
+export { CustomImageTool };

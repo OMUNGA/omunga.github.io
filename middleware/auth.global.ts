@@ -8,7 +8,9 @@ export default defineNuxtRouteMiddleware((to) => {
     return navigateTo("/");
   } else if (
     !isAuthenticated &&
-    (to.name == "new" || to.meta.layout == "settings")
+    (to.name == "new" ||
+      to.meta.layout == "settings" ||
+      to.name == "@user-article-edit")
   ) {
     throw createError({
       statusCode: 404,

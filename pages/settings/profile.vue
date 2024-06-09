@@ -53,7 +53,7 @@ const authStore = useAuthStore();
 const { user } = storeToRefs(authStore);
 const { updateUserStore } = authStore;
 const { updateUser } = useUser();
-const { imageTo64 } = useFile();
+const {} = useFile();
 const isLoading = ref(false);
 const isFileUpdating = ref(false);
 const state = ref({
@@ -63,7 +63,7 @@ const state = ref({
 });
 async function updateImage(e: File[]) {
   isFileUpdating.value = true;
-  const imageUrl = await imageTo64(e[0]);
+  // const imageUrl = await imageTo64(e[0]);
   const response = await updateUser({ photo: imageUrl });
   if (response) {
     const onSave = await updateUserStore({ ...state.value, photo: imageUrl });
