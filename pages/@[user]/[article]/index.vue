@@ -27,7 +27,12 @@
               loggedUser.username == user && route.name != '@user-article-edit'
             "
           >
-            <UButton label="editar" color="white" variant="solid" to="./edit" />
+            <UButton
+              label="editar"
+              color="white"
+              variant="solid"
+              :to="`/@${user}/${article}/edit`"
+            />
           </div>
           <div v-if="loggedUser.username != user" class="flex gap-1 md:hidden">
             <UButton
