@@ -10,6 +10,7 @@ mutation LoginUser($email: String!, $password: String!) {
       bio
       phone
       photo
+      cover
     }
   }
 }
@@ -52,5 +53,6 @@ query GetOneUser($username: String!) {
     name
     photo
     bio
+    cover
   }
 }

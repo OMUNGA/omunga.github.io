@@ -19,7 +19,7 @@
             <div class="w-full flex flex-col mt-4 gap-4">
               <template v-if="posts && Object.keys(posts).length > 0">
                 <template v-if="posts.totalPosts == 0">
-                  <span>sem artigos</span>
+                  <span class="text-center opacity-30">sem artigos</span>
                 </template>
                 <template v-else>
                   <Card v-for="post in posts.posts" :article="post" />
@@ -44,7 +44,6 @@
 
 <script setup lang="ts">
 import { Footer, Topics, Card, CardSkeleton } from "@/components";
-import AvatarImage from "@/public/empty-avatar.jpeg";
 import { useArticle } from "@/composables";
 import type { IGetAllArticle } from "@/types/article";
 

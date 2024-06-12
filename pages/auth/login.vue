@@ -93,12 +93,14 @@ watch([state], () => {
               color="gray"
               variant="ghost"
               size="lg"
+              disabled
             />
             <UButton
               icon="i-carbon-logo-github"
               color="gray"
               variant="ghost"
               size="lg"
+              disabled
             />
           </div>
           <div class="flex justify-center">

@@ -3,7 +3,11 @@
     <div v-if="userData?.data.user" class="flex justify-between mt-6 mx-2">
       <section class="w-full flex flex-col md:mr-12 gap-4">
         <div class="w-full max-h-40">
-          <img class="w-full h-full object-cover" src="/vue.jpg" alt="" />
+          <img
+            class="w-full h-full object-cover"
+            :src="userData.data.user.cover"
+            alt=""
+          />
         </div>
 
         <UTabs v-if="user == username" v-model="selected" :items="items">
@@ -65,7 +69,9 @@
           </template>
         </div>
       </section>
-      <aside class="h-full min-w-72 sticky top-20 hidden md:block">
+      <aside
+        class="h-full w-full max-w-72 text-center sticky top-20 hidden md:block"
+      >
         <UCard>
           <div class="w-full flex flex-col justify-start items-center gap-2">
             <UAvatar src="" alt="Miguel Domingos" size="3xl" />
@@ -117,7 +123,7 @@
 
 <script setup lang="ts">
 import { Card, CardSkeleton, Loading } from "@/components";
-import type { IGetAllArticle, IUserResponse, IUserSchema } from "@/types";
+import type { IGetAllArticle, IUserResponse } from "@/types";
 import { useArticle, useUser } from "@/composables";
 import { useAuthStore } from "@/store";
 
@@ -125,7 +131,7 @@ definePageMeta({
   layout: "profile",
 });
 
-const { getAllUserArticle, getAllUnpublishedArticle } = useArticle();
+const { getAllUnpublishedArticle } = useArticle();
 const { getOneUser } = useUser();
 const { user } = useRoute().params;
 const { username } = useAuthStore().user;
@@ -167,10 +173,9 @@ const drafts = ref<IGetAllArticle>();
 
 onBeforeMount(async () => {
   const response = await getOneUser(user as string);
-
   if (response.statusCode == 200) {
     userData.value = response;
-    console.log({ response });
+    console.log(userData.value);
   }
 
   if (username == user) {

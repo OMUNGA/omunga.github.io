@@ -1,5 +1,7 @@
 <template>
-  <header class="h-16 z-10 sticky flex w-full shadow-sm dark:bg-gray-900 top-0">
+  <header
+    class="h-16 z-10 sticky flex w-full shadow-sm bg-white dark:bg-gray-900 top-0"
+  >
     <UContainer class="w-full">
       <div class="w-full h-full flex justify-between items-center gap-4">
         <ULink to="/">

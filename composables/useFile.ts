@@ -2,11 +2,24 @@ import {
   getDownloadURL,
   ref as firebaseRef,
   uploadBytes,
+  deleteObject,
 } from "firebase/storage";
 import { storage } from "@/services/firebase";
 
+interface IImageUpload {
+  success: number;
+  file: {
+    url: string;
+  };
+}
+
 export function useFile() {
-  async function uploadImage(file: File) {
+  async function uploadImage(
+    file: File,
+    storedFile?: string
+  ): Promise<IImageUpload> {
+    await deleteImage(storedFile as string);
+
     return new Promise(async (resolve, reject) => {
       try {
         const mountainsRef = firebaseRef(
@@ -29,6 +42,15 @@ export function useFile() {
         reject(error);
       }
     });
+  }
+
+  async function deleteImage(image: string) {
+    try {
+      const desertRef = firebaseRef(storage, image);
+      await deleteObject(desertRef);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return { uploadImage };
