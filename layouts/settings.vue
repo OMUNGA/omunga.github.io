@@ -6,9 +6,11 @@
         <div class="w-full">
           <div class="flex items-center gap-4">
             <UAvatar :src="user.photo" :alt="user.name" size="lg" />
-            <h1>
-              {{ user.name }} <span>({{ user.username }})</span>
-            </h1>
+            <ULink :to="`/@${user.username}`">
+              <h1>
+                {{ user.name }} <span>({{ user.username }})</span>
+              </h1>
+            </ULink>
           </div>
         </div>
         <div class="w-full flex gap-8">
@@ -23,7 +25,6 @@
 </template>
 
 <script setup lang="ts">
-import AvatarImage from "@/public/avatar.jpg";
 import { Header } from "@/components";
 import { useAuthStore } from "@/store";
 

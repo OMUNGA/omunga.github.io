@@ -15,6 +15,7 @@ export interface IUserSchema {
   bio: string;
   phone: string;
   photo?: string;
+  cover?: string;
 }
 
 export interface IUserResponse extends IResponse {

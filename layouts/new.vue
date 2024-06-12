@@ -31,7 +31,6 @@
 </template>
 
 <script setup lang="ts">
-import AvatarImage from "@/public/avatar.jpg";
 import { useAuthStore } from "~/store";
 
 const { user } = storeToRefs(useAuthStore());

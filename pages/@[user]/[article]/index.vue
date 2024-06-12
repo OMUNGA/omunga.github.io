@@ -76,7 +76,9 @@
           </div>
         </div>
       </section>
-      <aside class="h-full min-w-72 sticky top-19.5 hidden md:block">
+      <aside
+        class="h-full w-full max-w-72 text-center sticky top-19.5 hidden md:block"
+      >
         <div class="w-full flex flex-col gap-4">
           <UCard>
             <div class="w-full flex flex-col justify-start items-center gap-2">
@@ -134,7 +136,7 @@
               >Mais artigos de @{{ data?.user.username }}</span
             >
             <div class="w-full flex flex-col items-center mt-4">
-              <span class="text-slate-900 dark:text-white opacity-50"
+              <span class="text-slate-900 dark:text-white opacity-30"
                 >Sem artigos</span
               >
             </div>
