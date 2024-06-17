@@ -105,6 +105,7 @@ query getAllUnpublishedArticle($page: Int = 1, $limit: Int = 20) {
         name
         username
         bio
+        photo
       }
       createdAt
     }
@@ -183,5 +184,21 @@ mutation updateArticle($id: String!, $data: UpdatePostDto!) {
     cover
     createdAt
     published
+  }
+}
+
+mutation searchArticle($article: String!) {
+  searchPost(searchInput: $article) {
+    postID
+    title
+    slug
+    content
+    user {
+      id
+      name
+      username
+      photo
+      bio
+    }
   }
 }

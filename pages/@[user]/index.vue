@@ -74,7 +74,11 @@
       >
         <UCard>
           <div class="w-full flex flex-col justify-start items-center gap-2">
-            <UAvatar src="" alt="Miguel Domingos" size="3xl" />
+            <UAvatar
+              :src="userData.data.user.photo"
+              alt="Miguel Domingos"
+              size="3xl"
+            />
             <div class="flex flex-col items-center w-full gap-4">
               <div class="w-full flex flex-col items-center gap-1">
                 <span class="text-slate-900 dark:text-white">{{
@@ -175,7 +179,6 @@ onBeforeMount(async () => {
   const response = await getOneUser(user as string);
   if (response.statusCode == 200) {
     userData.value = response;
-    console.log(userData.value);
   }
 
   if (username == user) {

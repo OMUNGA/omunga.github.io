@@ -15,14 +15,7 @@
     >
       <template #header>
         <div class="flex items-center justify-end gap-2">
-          <UInput
-            class="w-full"
-            icon="i-heroicons-magnifying-glass-20-solid"
-            size="md"
-            color="white"
-            :trailing="false"
-            placeholder="Pesquisar assunto..."
-          />
+          <SearchBar class="w-full" />
           <ThemeToggle />
           <UButton
             color="gray"
@@ -47,7 +40,7 @@
 <script setup lang="ts">
 import { useAuthStore } from "~/store";
 import { useAuth } from "@/composables";
-import { ThemeToggle } from "@/components";
+import { ThemeToggle, SearchBar } from "@/components";
 
 const model = defineModel();
 

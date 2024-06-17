@@ -56,3 +56,13 @@ query GetOneUser($username: String!) {
     cover
   }
 }
+
+query searchUser($user: String!) {
+  searchUsers(searchInput: $user) {
+    id
+    name
+    username
+    photo
+    bio
+  }
+}

@@ -80,7 +80,6 @@ export function useArticle() {
   async function createArticle(data: ICreateArticle) {
     try {
       const response = await GqlCreateArticle({ ...data });
-      console.log({ response });
       return setResponse(
         200,
         "success",

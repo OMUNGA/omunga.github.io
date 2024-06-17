@@ -174,4 +174,9 @@ img {
 .codex-editor__redactor {
   padding-bottom: 150px !important;
 }
+
+/* remove image description input */
+.cdx-input.image-tool__caption {
+  display: none;
+}
 </style>

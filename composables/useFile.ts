@@ -18,7 +18,9 @@ export function useFile() {
     file: File,
     storedFile?: string
   ): Promise<IImageUpload> {
-    await deleteImage(storedFile as string);
+    if (storedFile) {
+      await deleteImage(storedFile as string);
+    }
 
     return new Promise(async (resolve, reject) => {
       try {
@@ -45,11 +47,27 @@ export function useFile() {
   }
 
   async function deleteImage(image: string) {
+    const response = await CheckImageStatus(image);
+    if (response == 200) {
+      try {
+        const desertRef = firebaseRef(storage, image);
+        await deleteObject(desertRef);
+      } catch (error) {
+        console.log(error.statusCode);
+      }
+    }
+  }
+
+  async function CheckImageStatus(url: string) {
     try {
-      const desertRef = firebaseRef(storage, image);
-      await deleteObject(desertRef);
+      await $fetch(url);
+      return 200;
     } catch (error) {
-      console.log(error);
+      if (error.statusCode == 404) {
+        return 404;
+      } else {
+        return error;
+      }
     }
   }
 
