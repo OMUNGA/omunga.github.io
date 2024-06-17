@@ -3,12 +3,13 @@
     <UCard class="lg:w-full lg:max-w-2xl lg:mx-auto mx-2 mb-4">
       <div class="w-full flex justify-between">
         <div class="flex flex-1 mr-4 flex-col">
-          <div>
-            <UButton
-              label="adicionar cover"
-              color="white"
-              variant="solid"
-              size="lg"
+          <div class="max-w-xs">
+            <UInput
+              :loading="uploadingCover"
+              type="file"
+              icon="i-heroicons-folder"
+              loading-icon="i-carbon-circle-dash"
+              @change="uploadCover($event)"
             />
           </div>
           <UInput
@@ -18,9 +19,21 @@
             v-model="data.title"
           />
         </div>
-        <div class="">
-          <UCard class="w-[100px] h-[100px]"> </UCard>
-        </div>
+        <UCard
+          class="w-[100px] h-[100px] overflow-hidden"
+          :ui="{
+            body: {
+              padding: '',
+            },
+          }"
+        >
+          <img
+            v-if="data.cover"
+            :src="data.cover"
+            class="w-[100px] h-[100px] object-cover"
+            alt=""
+          />
+        </UCard>
       </div>
     </UCard>
 
@@ -51,13 +64,14 @@
 
 <script setup lang="ts">
 import { Editor } from "@/components";
-import { useArticle } from "@/composables";
+import { useArticle, useFile } from "@/composables";
 import { useAuthStore } from "@/store";
 
 definePageMeta({
   layout: "new",
 });
 const { createArticle } = useArticle();
+const { uploadImage } = useFile();
 const username = useAuthStore().user.username;
 interface ICreateArticle {
   title: string;
@@ -68,6 +82,7 @@ interface ICreateArticle {
   published: boolean;
 }
 
+const uploadingCover = ref(false);
 const loadingButtons = reactive({
   publish: false,
   draft: false,
@@ -76,8 +91,7 @@ const editorRef = ref(null);
 const data = ref<ICreateArticle>({
   title: "",
   description: "descrição de exemplo",
-  cover:
-    "https://uploads.toptal.io/blog/image/125920/toptal-blog-image-1524038149943-65cd6aca270907a12410a09b207714f2.png",
+  cover: "",
   content: "",
   tags: [],
   published: false,
@@ -99,6 +113,15 @@ async function handleOnSave(published: boolean) {
         navigateTo(`/@${username}/${response.data.slug}`);
       }
     }
+  }
+}
+
+async function uploadCover(e: File[]) {
+  uploadingCover.value = true;
+  const response = await uploadImage(e[0], data.value.cover);
+  uploadingCover.value = false;
+  if (response.success == 1) {
+    data.value.cover = response.file.url;
   }
 }
 </script>

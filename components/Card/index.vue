@@ -4,7 +4,11 @@
       <div class="w-full flex flex-col gap-2">
         <div class="w-full flex gap-4">
           <ULink :to="`/@${article.user.username}`">
-            <UAvatar :src="AvatarImage" alt="User User" size="lg" />
+            <UAvatar
+              :src="article.user.photo"
+              :alt="article.user.name"
+              size="lg"
+            />
           </ULink>
           <div
             class="text-slate-900 dark:text-white flex flex-col justify-center text-black/50"
@@ -32,9 +36,11 @@
           </ULink>
         </div>
         <div class="">
-          <span class="font-bold text-2xl text-slate-900 dark:text-white">{{
-            article.title
-          }}</span>
+          <ULink :to="`/@${article.user.username}/${article.slug}`">
+            <span class="font-bold text-2xl text-slate-900 dark:text-white">{{
+              article.title
+            }}</span>
+          </ULink>
         </div>
         <div class="">
           <span class="text-slate-600 dark:text-slate-400 font-light">
@@ -79,7 +85,6 @@
 <script setup lang="ts">
 import { formatDistance } from "date-fns";
 import { CardSkeleton } from "@/components";
-import AvatarImage from "@/public/avatar.jpg";
 import type { IArticle } from "@/types/article";
 
 defineProps<{

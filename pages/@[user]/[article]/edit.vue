@@ -13,12 +13,13 @@
       <UCard class="lg:w-full lg:max-w-2xl lg:mx-auto mx-2 mb-4">
         <div class="w-full flex justify-between">
           <div class="flex flex-1 mr-4 flex-col">
-            <div>
-              <UButton
-                label="adicionar cover"
-                color="white"
-                variant="solid"
-                size="lg"
+            <div class="max-w-xs">
+              <UInput
+                :loading="uploadingCover"
+                type="file"
+                icon="i-heroicons-folder"
+                loading-icon="i-carbon-circle-dash"
+                @change="uploadCover($event)"
               />
             </div>
             <UInput
@@ -36,7 +37,11 @@
               },
             }"
           >
-            <img :src="data.cover" class="w-[100px] h-[100px] object-cover" />
+            <img
+              v-if="data.cover"
+              :src="data.cover"
+              class="w-[100px] h-[100px] object-cover"
+            />
           </UCard>
         </div>
       </UCard>
@@ -70,17 +75,20 @@
 <script setup lang="ts">
 import type { UpdatePostDto } from "#gql";
 import { Editor } from "@/components";
-import { useArticle } from "@/composables";
+import { useArticle, useFile } from "@/composables";
 import { stringToObject } from "@/helpers";
 
 definePageMeta({
   layout: "new",
 });
 
+const uploadingCover = ref(false);
 const loadingButtons = reactive({
   publish: false,
   draft: false,
 });
+const { uploadImage } = useFile();
+
 const { getOneArticle, updateArticle } = useArticle();
 
 const editorRef = ref(null);
@@ -116,9 +124,18 @@ async function onSubmit(published: boolean) {
       );
       if (response?.statusCode == 200) {
         useToast().add({ title: "artigo atualizado", timeout: 3000 });
-        navigateTo(`/@${user}/${article}`);
+        navigateTo(`/@${user}/${response.data.slug}`);
       }
     }
+  }
+}
+
+async function uploadCover(e: File[]) {
+  uploadingCover.value = true;
+  const response = await uploadImage(e[0], data.value?.cover);
+  uploadingCover.value = false;
+  if (response.success == 1) {
+    data.value.cover = response.file.url;
   }
 }
 

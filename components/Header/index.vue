@@ -7,14 +7,7 @@
         <ULink to="/">
           <Logo />
         </ULink>
-        <UInput
-          class="hidden md:block w-full max-w-lg"
-          icon="i-heroicons-magnifying-glass-20-solid"
-          size="md"
-          color="white"
-          :trailing="false"
-          placeholder="Pesquise por um assunto..."
-        />
+        <SearchBar class="hidden md:block w-full max-w-lg" />
         <template v-if="isAuthenticated">
           <div class="flex items-center gap-4">
             <div class="flex gap-2 items-center">
@@ -146,6 +139,7 @@ import {
   ThemePicker,
   SocialMedia,
   Modal,
+  SearchBar,
 } from "@/components";
 import { useAuthStore } from "~/store";
 import AvatarImage from "@/public/avatar.jpg";

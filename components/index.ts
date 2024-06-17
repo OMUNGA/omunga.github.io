@@ -12,6 +12,7 @@ import Card from "./Card/index.vue";
 import CardSkeleton from "./CardSkeleton/index.vue";
 import ThemePicker from "./ThemePicker/index.vue";
 import Loading from "./Loading/index.vue";
+import SearchBar from "./SearchBar/index.vue";
 
 export {
   Topics,
@@ -28,4 +29,5 @@ export {
   CardSkeleton,
   ThemePicker,
   Loading,
+  SearchBar,
 };
