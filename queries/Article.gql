@@ -27,6 +27,7 @@ query getAllArticle($page: Int = 1, $limit: Int = 5) {
         name
         username
         bio
+        photo
       }
       createdAt
     }
@@ -67,6 +68,7 @@ query getAllUserArticle($page: Int = 1, $limit: Int = 20, $username: String!) {
         id
         name
         username
+        photo
       }
       createdAt
     }
@@ -192,13 +194,30 @@ mutation searchArticle($article: String!) {
     postID
     title
     slug
+    description
     content
+    cover
+    tags
+    published
+    postLike {
+      postID
+      userID
+      postlikeID
+      createdAt
+    }
+    comment {
+      commentID
+      postID
+      userID
+      content
+      createdAt
+    }
     user {
       id
       name
       username
       photo
-      bio
     }
+    createdAt
   }
 }

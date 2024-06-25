@@ -22,6 +22,10 @@ export interface IUserResponse extends IResponse {
   data: IUserDataResponse;
 }
 
+export interface IUsersResponse extends IResponse {
+  data: IUserSchema[];
+}
+
 interface IUserDataResponse {
   user: IUserSchema;
   posts: IGetAllArticle;

@@ -2,7 +2,7 @@
   <UContainer>
     <div v-if="userData?.data.user" class="flex justify-between mt-6 mx-2">
       <section class="w-full flex flex-col md:mr-12 gap-4">
-        <div class="w-full max-h-40">
+        <div v-if="userData.data.user.cover" class="w-full max-h-40">
           <img
             class="w-full h-full object-cover"
             :src="userData.data.user.cover"
@@ -179,6 +179,11 @@ onBeforeMount(async () => {
   const response = await getOneUser(user as string);
   if (response.statusCode == 200) {
     userData.value = response;
+  } else {
+    throw createError({
+      statusCode: 404,
+      statusMessage: "Page Not Found",
+    });
   }
 
   if (username == user) {

@@ -100,6 +100,15 @@ export function useArticle() {
       return getResponse(error);
     }
   }
+
+  async function searchArticle(article: string) {
+    try {
+      const response = await GqlSearchArticle({ article });
+      return setResponse(200, "success", response.searchPost);
+    } catch (error) {
+      return getResponse(error);
+    }
+  }
   return {
     getAllArticle,
     createArticle,
@@ -107,5 +116,6 @@ export function useArticle() {
     getOneArticle,
     getAllUnpublishedArticle,
     updateArticle,
+    searchArticle,
   };
 }
