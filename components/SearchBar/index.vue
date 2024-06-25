@@ -2,6 +2,7 @@
   <UInput
     icon="i-heroicons-magnifying-glass-20-solid"
     size="md"
+    class="w-full max-w-lg"
     color="white"
     :trailing="false"
     placeholder="Pesquise assunto..."
@@ -12,6 +13,7 @@
           path: '/search',
           query: {
             q: data,
+            type: type || 'articles',
           },
         })
     "
@@ -20,4 +22,12 @@
 
 <script setup lang="ts">
 const data = ref<string>("");
+const type = ref<string>("");
+
+const { query } = useRoute();
+
+watchEffect(() => {
+  data.value = query.q as string;
+  type.value = query.type as string;
+});
 </script>

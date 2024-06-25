@@ -169,6 +169,10 @@ onBeforeMount(async () => {
     data.value = response.data;
   } else {
     useToast().add({ title: response.message, timeout: 5000, color: "red" });
+    throw createError({
+      statusCode: 404,
+      statusMessage: "Page Not Found",
+    });
   }
 });
 </script>

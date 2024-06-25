@@ -3,6 +3,7 @@ import type {
   IRegisterResponse,
   IUserResponse,
   IUserSchema,
+  IUsersResponse,
 } from "@/types";
 import { useResponse } from "@/composables";
 
@@ -49,5 +50,17 @@ export function useUser() {
     }
   }
 
-  return { register, updateUser, getOneUser };
+  async function searchUser(user: string) {
+    try {
+      const response = await GqlSearchUser({ user });
+      return setResponse(
+        200,
+        "success",
+        response.searchUsers as IUserSchema[]
+      ) as IUsersResponse;
+    } catch (error) {
+      return getResponse(error);
+    }
+  }
+  return { register, updateUser, getOneUser, searchUser };
 }
