@@ -186,6 +186,7 @@
                 <UButton
                   color="gray"
                   variant="ghost"
+                  :disabled="!isAuthenticated"
                   icon="i-heroicons-chat-bubble-oval-left"
                   @click="commentInput = true"
                 />
@@ -198,7 +199,10 @@
                 />
               </div>
             </div>
-            <div v-if="commentInput" class="w-full h-full flex flex-col gap-6">
+            <div
+              v-if="commentInput && isAuthenticated"
+              class="w-full h-full flex flex-col gap-6"
+            >
               <div class="flex gap-2 items-start">
                 <UAvatar
                   size="md"
@@ -269,7 +273,8 @@ const loadings = reactive({
   onUpdate: false,
 });
 
-const loggedUser = useAuthStore().user;
+const { user: loggedUser, isAuthenticated } = useAuthStore();
+
 const data = ref<IArticle>();
 const isFetching = ref(true);
 const openComments = ref(false);
