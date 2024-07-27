@@ -109,6 +109,42 @@ export function useArticle() {
       return getResponse(error);
     }
   }
+
+  async function getAllComments(postID: string) {
+    try {
+      const response = await GqlFindAllComments({ postID });
+      return setResponse(200, "success", response.findAllComments);
+    } catch (error) {
+      return getResponse(error);
+    }
+  }
+
+  async function createComment(postID: string, content: string) {
+    try {
+      const response = await GqlCreateComment({ postID, content });
+      return setResponse(200, "success", response.CreateComment);
+    } catch (error) {
+      return getResponse(error);
+    }
+  }
+
+  async function deleteComment(id: string) {
+    try {
+      const response = await GqlDeleteComment({ id });
+      return setResponse(200, "success", response.removeComment);
+    } catch (error) {
+      return getResponse(error);
+    }
+  }
+
+  async function editComment(commentID: string, content: string) {
+    try {
+      const response = await GqlUpdateComment({ commentID, content });
+      return setResponse(200, "success", response.updateComment);
+    } catch (error) {
+      return getResponse(error);
+    }
+  }
   return {
     getAllArticle,
     createArticle,
@@ -117,5 +153,9 @@ export function useArticle() {
     getAllUnpublishedArticle,
     updateArticle,
     searchArticle,
+    getAllComments,
+    createComment,
+    deleteComment,
+    editComment,
   };
 }

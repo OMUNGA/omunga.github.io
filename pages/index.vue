@@ -93,6 +93,5 @@ onBeforeMount(async () => {
   if (response.statusCode == 200) {
     posts.value = response.data;
   }
-  console.log({ response });
 });
 </script>

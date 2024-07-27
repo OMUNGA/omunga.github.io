@@ -22,17 +22,42 @@
             </div>
           </div>
 
-          <div
-            v-if="
-              loggedUser.username == user && route.name != '@user-article-edit'
-            "
-          >
-            <UButton
-              label="editar"
-              color="white"
-              variant="solid"
-              :to="`/@${user}/${article}/edit`"
-            />
+          <div class="flex gap-4 items-center">
+            <div class="flex gap-2 items-center">
+              <UIcon
+                name="i-heroicons-fire-20-solid"
+                class="text-2xl cursor-pointer opacity-50 hover:opacity-100"
+                @click="
+                  () => {
+                    console.log('click');
+                  }
+                "
+              />
+              <div
+                @click="openComments = true"
+                class="flex items-end gap-1 cursor-pointer opacity-50 hover:opacity-100"
+              >
+                <span class="text-sm">{{ comments.length }}</span>
+                <UIcon
+                  name="i-heroicons-chat-bubble-oval-left"
+                  class="text-2xl"
+                />
+              </div>
+            </div>
+
+            <div
+              v-if="
+                loggedUser.username == user &&
+                route.name != '@user-article-edit'
+              "
+            >
+              <UButton
+                label="editar"
+                color="white"
+                variant="solid"
+                :to="`/@${user}/${article}/edit`"
+              />
+            </div>
           </div>
           <div v-if="loggedUser.username != user" class="flex gap-1 md:hidden">
             <UButton
@@ -144,29 +169,194 @@
         </div>
       </aside>
     </div>
+    <USlideover v-model="openComments" class="overflow-y-auto">
+      <UCard
+        class="flex flex-col flex-1"
+        :ui="{
+          body: { base: 'flex-1' },
+          ring: '',
+          divide: 'divide-y divide-gray-100 dark:divide-gray-800',
+        }"
+      >
+        <template #header>
+          <div class="w-full h-full flex flex-col gap-1">
+            <div class="w-full h-full flex justify-between">
+              <span class="text-lg">{{ comments.length }} Comments</span>
+              <div class="flex gap-2">
+                <UButton
+                  color="gray"
+                  variant="ghost"
+                  icon="i-heroicons-chat-bubble-oval-left"
+                  @click="commentInput = true"
+                />
+
+                <UButton
+                  color="gray"
+                  variant="ghost"
+                  icon="i-heroicons-x-mark-20-solid"
+                  @click="openComments = false"
+                />
+              </div>
+            </div>
+            <div v-if="commentInput" class="w-full h-full flex flex-col gap-6">
+              <div class="flex gap-2 items-start">
+                <UAvatar
+                  size="md"
+                  :src="loggedUser.photo"
+                  :alt="loggedUser.name"
+                />
+                <UTextarea
+                  class="w-full"
+                  placeholder="Escrever comentário"
+                  color="gray"
+                  autoresize
+                  v-model="newComment"
+                />
+              </div>
+              <div class="w-full flex justify-end gap-4">
+                <UButton
+                  variant="ghost"
+                  color="gray"
+                  @click="commentInput = false"
+                  >cancelar</UButton
+                >
+                <UButton
+                  color="primary"
+                  variant="solid"
+                  :loading="isCommentCreating"
+                  @click="createNewComment(data?.postID as string, newComment)"
+                  ><span class="text-white">comentar</span></UButton
+                >
+              </div>
+            </div>
+          </div>
+        </template>
+        <template #default>
+          <div class="w-full flex flex-col gap-8">
+            <Comment
+              @delete="onDeleteComment($event)"
+              @update="onEditComment($event)"
+              v-if="comments.length > 0"
+              v-for="comment in comments"
+              :comment
+            />
+          </div>
+        </template>
+      </UCard>
+    </USlideover>
   </UContainer>
 </template>
 
 <script setup lang="ts">
-import { Editor } from "@/components";
+import { Editor, Comment } from "@/components";
 import { useArticle } from "@/composables";
 import { useAuthStore } from "@/store";
 import { stringToObject } from "@/helpers";
 import type { IArticle } from "@/types";
 
 const { user, article } = useRoute().params;
-const { getOneArticle } = useArticle();
+const {
+  getOneArticle,
+  getAllComments,
+  createComment,
+  deleteComment,
+  editComment,
+} = useArticle();
+const isCommentCreating = ref(false);
+const isCommnetEditing = ref(false);
+const loadings = reactive({
+  onCreate: false,
+  onUpdate: false,
+});
+
 const loggedUser = useAuthStore().user;
 const data = ref<IArticle>();
 const isFetching = ref(true);
+const openComments = ref(false);
+const comments = ref<object[] | object>([]);
+const commentInput = ref(false);
 
 const route = useRoute();
+const newComment = ref("");
+interface EditComment {
+  commentID: string;
+  content: string;
+}
+
+async function onDeleteComment(id: string) {
+  const response = await deleteComment(id);
+  if (response.statusCode == 200) {
+    comments.value = comments.value.filter(
+      (comment) => id != comment.commentID
+    );
+    useToast().add({ title: "comentário apagado", timeout: 3000 });
+  } else {
+    useToast().add({
+      title: "erro ao apagar comentário",
+      timeout: 3000,
+      color: "red",
+    });
+  }
+}
+
+async function onEditComment(data: EditComment) {
+  loadings.onUpdate = true;
+  const response = await editComment(data.commentID, data.content);
+  if (response.statusCode == 200) {
+    useToast().add({ title: "comentário atualizado", timeout: 3000 });
+    await onFetchComments();
+  } else {
+    useToast().add({
+      title: "erro ao atualizar comentário",
+      timeout: 3000,
+      color: "red",
+    });
+  }
+  loadings.onUpdate = false;
+}
+
+async function createNewComment(postID: string, content: string) {
+  loadings.onCreate = true;
+  const response = await createComment(postID, content);
+  if (response.statusCode == 200) {
+    await onFetchComments();
+    newComment.value = "";
+    useToast().add({
+      title: "comentário criado",
+      timeout: 3000,
+    });
+  } else {
+    useToast().add({
+      title: response.message,
+      timeout: 5000,
+      color: "red",
+    });
+  }
+  loadings.onCreate = false;
+}
+
+async function onFetchComments() {
+  if (data.value?.postID) {
+    const commentResponse = await getAllComments(data.value.postID);
+    comments.value = [];
+    if (commentResponse.statusCode == 200) {
+      comments.value = commentResponse.data;
+    } else {
+      useToast().add({
+        title: commentResponse.message,
+        timeout: 5000,
+        color: "red",
+      });
+    }
+  }
+}
 
 onBeforeMount(async () => {
   const response = await getOneArticle(user as string, article as string);
   if (response.statusCode == 200) {
     isFetching.value = false;
     data.value = response.data;
+    await onFetchComments();
   } else {
     useToast().add({ title: response.message, timeout: 5000, color: "red" });
     throw createError({
