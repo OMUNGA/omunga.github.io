@@ -1,0 +1,48 @@
+query findAllComments($postID: String!) {
+  findAllComments(postID: $postID) {
+    commentID
+    postID
+    userID
+    content
+    createdAt
+    user {
+      id
+      name
+      username
+      photo
+    }
+  }
+}
+
+mutation createComment($postID: String!, $content: String!) {
+  CreateComment(createCommentDto: { postID: $postID, content: $content }) {
+    commentID
+    postID
+    userID
+    content
+    createdAt
+    # user {
+    #   id
+    #   name
+    #   username
+    #   photo
+    # }
+  }
+}
+
+mutation deleteComment($id: String!) {
+  removeComment(id: $id) {
+    commentID
+    postID
+    content
+    createdAt
+  }
+}
+
+mutation updateComment($commentID: String!, $content: String!) {
+  updateComment(data: { commentID: $commentID, content: $content }) {
+    postID
+    content
+    userID
+  }
+}

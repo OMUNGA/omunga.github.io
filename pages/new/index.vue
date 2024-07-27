@@ -103,11 +103,13 @@ async function handleOnSave(published: boolean) {
   } else {
     loadingButtons.draft = true;
   }
+
   if (editorRef.value) {
     const content = await editorRef.value.save();
     if (content) {
       data.value.content = JSON.stringify(content);
       const response = await createArticle({ ...data.value });
+
       if (response?.statusCode == 200) {
         useToast().add({ title: "artigo criado", timeout: 3000 });
         navigateTo(`/@${username}/${response.data.slug}`);
