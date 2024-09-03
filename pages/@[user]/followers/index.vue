@@ -55,4 +55,18 @@
   </UContainer>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useUser } from "@/composables";
+
+const { followers, getOneUser } = useUser();
+
+const { user } = useRoute().params;
+
+onBeforeMount(async () => {
+  const userResponse = await getOneUser(user as string);
+  if (userResponse.statusCode == 200) {
+    const followersResponse = await followers(userResponse.data.user.id);
+    console.log(followersResponse);
+  }
+});
+</script>

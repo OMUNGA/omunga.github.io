@@ -73,10 +73,11 @@
         class="h-full w-full max-w-72 text-center sticky top-20 hidden md:block"
       >
         <UCard>
+          {{ userData.data.user.id }}
           <div class="w-full flex flex-col justify-start items-center gap-2">
             <UAvatar
               :src="userData.data.user.photo"
-              alt="Miguel Domingos"
+              :alt="userData.data.user.name"
               size="3xl"
             />
             <div class="flex flex-col items-center w-full gap-4">
@@ -110,7 +111,12 @@
               </div>
             </div>
             <div class="w-full mt-2">
-              <UButton v-if="true" block size="lg">
+              <UButton
+                v-if="true"
+                block
+                size="lg"
+                @click="FollowNewUser(userData.data.user.id)"
+              >
                 <span class="text-white font-normal"> Seguir </span>
               </UButton>
               <UButton v-else block size="lg" color="gray">
@@ -136,7 +142,7 @@ definePageMeta({
 });
 
 const { getAllUnpublishedArticle } = useArticle();
-const { getOneUser } = useUser();
+const { getOneUser, followUser } = useUser();
 const { user } = useRoute().params;
 const { username } = useAuthStore().user;
 
@@ -193,4 +199,9 @@ onBeforeMount(async () => {
     }
   }
 });
+
+async function FollowNewUser(id: string) {
+  const response = await followUser(id);
+  console.log(response);
+}
 </script>

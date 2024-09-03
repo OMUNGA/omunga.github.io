@@ -62,5 +62,32 @@ export function useUser() {
       return getResponse(error);
     }
   }
-  return { register, updateUser, getOneUser, searchUser };
+
+  async function followUser(id: string) {
+    try {
+      const response = await GqlGetFollowers({ id });
+      console.log({ id });
+      console.log(response);
+      return setResponse(200, "success", response.getFollowers);
+    } catch (error) {
+      return getResponse(error);
+    }
+  }
+
+  async function followers(id: string) {
+    try {
+      const response = await GqlGetFollowers({ id });
+      return setResponse(200, "success", response.getFollowers);
+    } catch (error) {
+      return getResponse(error);
+    }
+  }
+  return {
+    register,
+    updateUser,
+    getOneUser,
+    searchUser,
+    followUser,
+    followers,
+  };
 }
