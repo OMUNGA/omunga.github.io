@@ -34,7 +34,7 @@
       </section>
       <aside class="h-full min-w-80 sticky top-20 hidden md:block">
         <div class="w-full flex flex-col gap-4">
-          <Topics :topics />
+          <!-- <Topics :topics /> -->
           <Footer />
         </div>
       </aside>
