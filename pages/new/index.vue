@@ -113,7 +113,18 @@ async function handleOnSave(published: boolean) {
       if (response?.statusCode == 200) {
         useToast().add({ title: "artigo criado", timeout: 3000 });
         navigateTo(`/@${username}/${response.data.slug}`);
+      } else {
+        useToast().add({
+          title: "Erro ao criar artigo",
+          timeout: 3000,
+          color: "red",
+        });
+        loadingButtons.publish = false;
+        loadingButtons.draft = false;
+        console.log(response);
       }
+    } else {
+      console.log("Está vazio");
     }
   }
 }
@@ -124,6 +135,8 @@ async function uploadCover(e: File[]) {
   uploadingCover.value = false;
   if (response.success == 1) {
     data.value.cover = response.file.url;
+  } else {
+    console.log(response);
   }
 }
 </script>

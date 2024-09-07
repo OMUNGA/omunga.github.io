@@ -16,6 +16,7 @@ import Loading from "./Loading/index.vue";
 import SearchBar from "./SearchBar/index.vue";
 import SearchPage from "./SearchPage/index.vue";
 import Comment from "./Comment/index.vue";
+import NotFound from "./NotFound/index.vue"
 
 export {
   Topics,
@@ -36,4 +37,5 @@ export {
   SearchBar,
   SearchPage,
   Comment,
+  NotFound
 };
