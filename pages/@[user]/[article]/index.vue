@@ -18,7 +18,9 @@
               class="text-slate-900 dark:text-white flex flex-col justify-around text-black/50"
             >
               <span>{{ data?.user.name }}</span>
-              <span class="text-xs">{{ data?.createdAt }}</span>
+              <span class="text-xs" v-if="data?.createdAt">{{
+                formatDistance(data.createdAt, new Date(), { addSuffix: true })
+              }}</span>
             </div>
           </div>
 
@@ -252,6 +254,7 @@
 </template>
 
 <script setup lang="ts">
+import { formatDistance } from "date-fns";
 import { Editor, Comment } from "@/components";
 import { useArticle } from "@/composables";
 import { useAuthStore } from "@/store";

@@ -73,7 +73,6 @@
         class="h-full w-full max-w-72 text-center sticky top-20 hidden md:block"
       >
         <UCard>
-          {{ userData.data.user.id }}
           <div class="w-full flex flex-col justify-start items-center gap-2">
             <UAvatar
               :src="userData.data.user.photo"

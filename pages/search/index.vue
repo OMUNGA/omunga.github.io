@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <template v-if="query.q">
     <Header />
     <div class="flex w-full gap-4">
@@ -46,7 +46,7 @@
     </div>
   </template>
   <SearchPage v-else />
-</template>
+</template> -->
 
 <script setup lang="ts">
 import { SearchPage, Header, UserCard, Card, CardSkeleton } from "@/components";
@@ -57,39 +57,43 @@ definePageMeta({
   layout: "empty",
 });
 
+const items = [
+  {
+    label: "users",
+    slot: "users",
+    icon: "i-heroicons-users",
+  },
+  {
+    label: "articles",
+    slot: "articles",
+    icon: "i-heroicons-book-open",
+  },
+];
+
+const route = useRoute();
+const router = useRouter();
+
+const selected = computed({
+  get() {
+    const index = items.findIndex((item) => item.label === route.query.type);
+    if (index === -1) {
+      return 0;
+    }
+
+    return index;
+  },
+  set(value) {
+    // Hash is specified here to prevent the page from scrolling to the top
+    router.replace({ query: { q: route.query.q, type: items[value].label } });
+  },
+});
+
 const query = computed(() => useRoute().query);
 const fetchedUsers = ref<IUserSchema[]>([]);
 const fetchedArticles = ref<IArticle[]>([]);
 const fetchingData = ref(true);
 const { searchUser } = useUser();
 const { searchArticle } = useArticle();
-
-const links = computed(() => [
-  {
-    label: "users",
-    icon: "i-heroicons-users",
-    badge: 0,
-    to: {
-      path: "/search",
-      query: {
-        q: `${query.value.q}`,
-        type: "users",
-      },
-    },
-  },
-  {
-    label: "articles",
-    icon: "i-heroicons-book-open",
-    badge: 0,
-    to: {
-      path: "/search",
-      query: {
-        q: query.value.q,
-        type: "articles",
-      },
-    },
-  },
-]);
 
 async function fetchData() {
   fetchedUsers.value = [];
@@ -116,3 +120,67 @@ onBeforeMount(async () => {
   }
 });
 </script>
+
+<template>
+  <template v-if="query.q">
+    <Header />
+    <UContainer class="w-full mx-auto">
+      <div class="w-full">
+        <div class="w-full space-y-4">
+          <UTabs
+            v-model="selected"
+            :items="items"
+            class="w-full"
+            orientation="vertical"
+            :ui="{
+              wrapper: 'flex flex-col md:flex-row items-start gap-8',
+              list: { width: 'w-full max-w-52', base: 'hidden md:block' },
+            }"
+          >
+            <template #default="{ item, selected }">
+              <div class="w-full flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <UIcon :name="item.icon" class="w-4 h-4 flex-shrink-0" />
+                  <span class="truncate">{{ item.label }} </span>
+                </div>
+                <span>
+                  {{
+                    item.label == "users"
+                      ? fetchedUsers.length
+                      : fetchedArticles.length
+                  }}</span
+                >
+              </div>
+            </template>
+
+            <template v-if="query.type == 'users'" #users="{ item }">
+              <div>
+                {{ fetchedUsers.length }}
+                <span v-if="fetchedUsers.length == 1">resultado</span>
+                <span v-else>resultados</span>
+              </div>
+              <div class="w-full max-w-4xl flex flex-col gap-2 mt-4">
+                <CardSkeleton v-if="fetchingData" />
+                <UserCard v-else v-for="user in fetchedUsers" :user />
+              </div>
+            </template>
+
+            <template v-if="query.type == 'articles'" #articles="{ item }">
+              <div>
+                {{ fetchedArticles.length }}
+                <span v-if="fetchedArticles.length == 1">resultado</span>
+                <span v-else>resultados</span>
+              </div>
+              <div class="w-full max-w-4xl flex flex-col gap-2 mt-4">
+                <CardSkeleton v-if="fetchingData" />
+                <Card v-else v-for="article in fetchedArticles" :article />
+              </div>
+            </template>
+          </UTabs>
+        </div>
+      </div>
+    </UContainer>
+  </template>
+
+  <SearchPage v-else />
+</template>

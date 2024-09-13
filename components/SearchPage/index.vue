@@ -20,7 +20,7 @@
     </header>
     <div class="w-full max-w-3xl mt-12 flex flex-col items-center">
       <span class="text-6xl font-bold text-slate-900 dark:text-slate-300"
-        >Omunga</span
+        ><span class="text-primary">O</span>munga</span
       >
       <UInput
         class="w-full mt-8"
