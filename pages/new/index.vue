@@ -18,6 +18,12 @@
             variant="none"
             v-model="data.title"
           />
+          <UInput
+            class="w-full"
+            placeholder="Descrição do artigo"
+            variant="none"
+            v-model="data.description"
+          />
         </div>
         <UCard
           class="w-[100px] h-[100px] overflow-hidden"
@@ -90,7 +96,7 @@ const loadingButtons = reactive({
 const editorRef = ref(null);
 const data = ref<ICreateArticle>({
   title: "",
-  description: "descrição de exemplo",
+  description: "",
   cover: "",
   content: "",
   tags: [],

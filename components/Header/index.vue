@@ -13,7 +13,7 @@
             <div class="flex gap-2 items-center">
               <UButton
                 variant="outline"
-                class="dark:hover:bg-transparent hidden sm:flex"
+                class="dark:hover:bg-transparent hidden md:flex"
                 label="Novo"
                 size="lg"
                 to="/new"
@@ -22,7 +22,7 @@
                 icon="i-heroicons-magnifying-glass-20-solid"
                 variant="ghost"
                 color="gray"
-                class="flex sm:hidden"
+                class="flex md:hidden"
               />
               <ThemePicker />
 

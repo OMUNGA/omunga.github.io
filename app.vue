@@ -48,17 +48,4 @@ body {
   width: 100%;
   height: 100vh;
 }
-
-/* html.dark {
-  background-color: #111827;
-  scrollbar-color: #1e293b #111827;
-} */
-
-:root {
-  --custom: v-bind("theme.color");
-}
-
-* {
-  background: var(--custom);
-}
 </style>
