@@ -14,7 +14,7 @@ class CustomImageTool extends Image {
       deleteObject(storageRef)
         .then(() => { })
         .catch(() => {
-          console.log("something went wrong while deleting the file");
+          //console.log("something went wrong while deleting the file");
         });
     }
     // do something with the file data

@@ -52,6 +52,7 @@ query GetOneUser($username: String!) {
     photo
     bio
     cover
+    # socialMedia
   }
 }
 
@@ -66,24 +67,37 @@ query searchUser($user: String!) {
 }
 
 query getFollowers($id: String!) {
-  getFollowers(id: $id) {
-    userID
-    createdAt
-    userTofollowID
+  getFollowers(userID: $id) {
+    id
+    followerUser {
+      id
+      username
+      name
+      # photo
+    }
   }
 }
 
-query getFollowing($id: String!) {
-  GetFollowing(id: $id) {
-    userID
-    createdAt
-    userTofollowID
+query getFollowing($username: String!) {
+  GetFollowing(username: $username) {
+    id
+    followingUser {
+      id
+      username
+      name
+      # photo
+    }
   }
 }
 
 mutation followUser($id: String!) {
-  followUser(data: { userIdToFollow: $id }) {
+  followUser(data: { userToFollowId: $id }) {
     id
-    userID
+    followerId
+    followingId
   }
+}
+
+mutation unFollowUser($id: String!) {
+  unfollowUser(data: { userToFollowId: $id })
 }

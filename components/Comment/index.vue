@@ -48,7 +48,7 @@
         class="text-2xl cursor-pointer opacity-50 hover:opacity-100"
         @click="
           () => {
-            console.log('click');
+            //console.log('click');
           }
         "
       /> -->

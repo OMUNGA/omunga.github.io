@@ -31,7 +31,7 @@
                 class="text-2xl cursor-pointer opacity-50 hover:opacity-100"
                 @click="
                   () => {
-                    console.log('click');
+                    //console.log('click');
                   }
                 "
               />
@@ -229,6 +229,7 @@
                 <UButton
                   color="primary"
                   variant="solid"
+                  :disabled="!newComment"
                   :loading="isCommentCreating"
                   @click="createNewComment(data?.postID as string, newComment)"
                   ><span class="text-white">comentar</span></UButton

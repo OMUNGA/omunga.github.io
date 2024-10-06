@@ -65,10 +65,17 @@ export function useUser() {
 
   async function followUser(id: string) {
     try {
-      const response = await GqlGetFollowers({ id });
-      console.log({ id });
-      console.log(response);
-      return setResponse(200, "success", response.getFollowers);
+      const response = await GqlFollowUser({ id: id });
+      return setResponse(200, "success", response.followUser);
+    } catch (error) {
+      return getResponse(error);
+    }
+  }
+
+  async function unfollowUser(id: string) {
+    try {
+      const response = await GqlUnFollowUser({ id: id });
+      return setResponse(200, "success", response.unfollowUser as any);
     } catch (error) {
       return getResponse(error);
     }
@@ -82,12 +89,24 @@ export function useUser() {
       return getResponse(error);
     }
   }
+
+  async function following(username: string) {
+    try {
+      const response = await GqlGetFollowing({ username: username });
+      return setResponse(200, "success", response.GetFollowing);
+    } catch (error) {
+      return getResponse(error);
+    }
+  }
+
   return {
     register,
     updateUser,
     getOneUser,
     searchUser,
     followUser,
+    unfollowUser,
     followers,
+    following,
   };
 }

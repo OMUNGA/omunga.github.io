@@ -12,11 +12,13 @@ export const useAuthStore = defineStore("auth", {
         bio: "",
         phone: "",
         photo: "",
+        socialMedia: [],
       },
       token: {
         value: "",
         expiredAt: "",
       },
+      following: [],
     };
   },
   actions: {
@@ -27,6 +29,8 @@ export const useAuthStore = defineStore("auth", {
         value: sign.token,
         expiredAt: sign.expiresIn,
       };
+      this.following.push(...sign.following);
+
       return this.isAuthenticated;
     },
     async updateUserStore(data: Partial<IUserSchema>): Promise<boolean> {
@@ -36,6 +40,8 @@ export const useAuthStore = defineStore("auth", {
       }
       return false;
     },
+
+    // updateUserFollowing()
   },
   persist: true,
 });

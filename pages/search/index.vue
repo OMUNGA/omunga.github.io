@@ -100,7 +100,7 @@ async function fetchData() {
   const userResponse = await searchUser(query.value.q as string);
   const articleResponse = await searchArticle(query.value.q as string);
   if (userResponse.statusCode == 200 && articleResponse.statusCode == 200) {
-    console.log({ userResponse, articleResponse });
+    //console.log({ userResponse, articleResponse });
     fetchedUsers.value.push(...userResponse.data);
     fetchedArticles.value.push(...articleResponse.data);
     fetchingData.value = false;

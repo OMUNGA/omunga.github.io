@@ -4,8 +4,8 @@
       <Logo />
     </div>
     <span class="dark:text-white text-slate-900 text-wrap text-sm"
-      >É projecto criado com o principal objectivo de incentivar a partilha de
-      conteúdo por parte dos profissionais de TI de Angola</span
+      >É um projecto criado com o principal objectivo de incentivar a partilha
+      de conteúdo por parte dos profissionais de TI de Angola</span
     >
     <div>
       <SocialMedia />

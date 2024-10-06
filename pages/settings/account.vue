@@ -6,14 +6,18 @@
         name="username"
         help="O nome de usuário é único e usado para identificar a tua conta"
       >
-        <UInput class="w-full max-w-xs" />
+        <UInput
+          :disabled="true"
+          :model-value="username"
+          class="w-full max-w-xs"
+        />
       </UFormGroup>
       <UFormGroup
         label="Email"
         name="email"
         help="O email é usado para localizar a tua conta no acto de login"
       >
-        <UInput class="w-full max-w-xs" />
+        <UInput :disabled="true" :model-value="email" class="w-full max-w-xs" />
       </UFormGroup>
     </div>
     <div class="prose-sm mt-10">
@@ -33,8 +37,12 @@
 </template>
 
 <script setup lang="ts">
+import { useAuthStore } from "~/store";
+
 definePageMeta({
   layout: "settings",
   alias: "/settings/admin",
 });
+
+const { username, email } = useAuthStore().user;
 </script>
