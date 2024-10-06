@@ -53,7 +53,7 @@ export function useFile() {
         const desertRef = firebaseRef(storage, image);
         await deleteObject(desertRef);
       } catch (error) {
-        console.log(error.statusCode);
+        //console.log(error.statusCode);
       }
     }
   }

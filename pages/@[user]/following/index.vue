@@ -2,7 +2,7 @@
   <UContainer>
     <div class="flex justify-between mt-6 mx-2">
       <section class="w-full flex flex-col md:mr-12 gap-4">
-        seguidores aqui
+        Quem estou a seguir aqui
       </section>
       <aside
         class="h-full w-full max-w-72 text-center sticky top-20 hidden md:block"
@@ -55,4 +55,19 @@
   </UContainer>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useUser } from "@/composables";
+
+const { following, getOneUser } = useUser();
+
+const { user } = useRoute().params;
+
+onBeforeMount(async () => {
+  const userResponse = await getOneUser(user as string);
+  if (userResponse.statusCode == 200) {
+    const followingResponse = await following(userResponse.data.user.username);
+    //console.log("estou seguindo: ");
+    //console.log(followingResponse);
+  }
+});
+</script>

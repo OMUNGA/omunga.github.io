@@ -127,10 +127,10 @@ async function handleOnSave(published: boolean) {
         });
         loadingButtons.publish = false;
         loadingButtons.draft = false;
-        console.log(response);
+        //console.log(response);
       }
     } else {
-      console.log("Está vazio");
+      //console.log("Está vazio");
     }
   }
 }
@@ -142,7 +142,7 @@ async function uploadCover(e: File[]) {
   if (response.success == 1) {
     data.value.cover = response.file.url;
   } else {
-    console.log(response);
+    //console.log(response);
   }
 }
 </script>

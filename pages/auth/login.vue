@@ -32,6 +32,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   isLoading.value = true;
   const response = await login({ ...state });
   isLoading.value = false;
+
   if (response?.statusCode == 200) {
     const onSave = await setUser(response.data);
     if (onSave) {

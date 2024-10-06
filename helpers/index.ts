@@ -1,3 +1,3 @@
 import stringToObject from "./stringToObject";
-
-export { stringToObject };
+import socialMediaByURL from "./socialMediaByURL";
+export { stringToObject, socialMediaByURL };

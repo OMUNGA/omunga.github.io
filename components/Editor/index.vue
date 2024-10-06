@@ -57,7 +57,7 @@ async function save() {
   try {
     return await editor.save();
   } catch (error) {
-    console.log(error);
+    //console.log(error);
   }
 }
 

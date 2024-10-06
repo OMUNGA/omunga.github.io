@@ -46,35 +46,51 @@
       >
         <div class="w-full flex flex-col gap-2">
           <div class="w-full flex items-center gap-2">
-            <UIcon name="i-heroicons-link-20-solid" class="opacity-50" />
+            <UIcon
+              :name="socialMediaByURL(socialMedias.social1)"
+              class="opacity-50"
+            />
             <UInput
               size="xs"
               class="w-full"
               placeholder="Link da rede social"
+              v-model="socialMedias.social1"
             />
           </div>
           <div class="w-full flex items-center gap-2">
-            <UIcon name="i-heroicons-link-20-solid" class="opacity-50" />
+            <UIcon
+              :name="socialMediaByURL(socialMedias.social2)"
+              class="opacity-50"
+            />
             <UInput
               size="xs"
               class="w-full"
               placeholder="Link da rede social"
+              v-model="socialMedias.social2"
             />
           </div>
           <div class="w-full flex items-center gap-2">
-            <UIcon name="i-heroicons-link-20-solid" class="opacity-50" />
+            <UIcon
+              :name="socialMediaByURL(socialMedias.social3)"
+              class="opacity-50"
+            />
             <UInput
               size="xs"
               class="w-full"
               placeholder="Link da rede social"
+              v-model="socialMedias.social3"
             />
           </div>
           <div class="w-full flex items-center gap-2">
-            <UIcon name="i-heroicons-link-20-solid" class="opacity-50" />
+            <UIcon
+              :name="socialMediaByURL(socialMedias.social4)"
+              class="opacity-50"
+            />
             <UInput
               size="xs"
               class="w-full"
               placeholder="Link da rede social"
+              v-model="socialMedias.social4"
             />
           </div>
         </div>
@@ -96,6 +112,7 @@
 import { useAuthStore } from "@/store";
 import type { IUserSchema } from "@/types";
 import { useUser, useFile } from "@/composables";
+import { socialMediaByURL } from "@/helpers";
 
 definePageMeta({
   alias: "/settings",
@@ -111,8 +128,22 @@ const { uploadImage } = useFile();
 const isLoading = ref(false);
 const photoUploading = ref(false);
 const coverUploading = ref(false);
-const state = ref<IUserSchema>();
 
+const state = ref<IUserSchema>({
+  id: "",
+  username: "",
+  name: "",
+  email: "",
+  bio: "",
+  phone: "",
+  socialMedia: [],
+});
+const socialMedias = reactive({
+  social1: "",
+  social2: "",
+  social3: "",
+  social4: "",
+});
 async function updatePhotoImage(e: File[]) {
   photoUploading.value = true;
   const upload = await uploadImage(e[0], state.value?.photo);
@@ -147,6 +178,13 @@ async function updateCoverImage(e: File[]) {
 
 async function onSubmit() {
   isLoading.value = true;
+  state.value.socialMedia = [
+    socialMedias.social1,
+    socialMedias.social2,
+    socialMedias.social3,
+    socialMedias.social4,
+  ];
+
   const response = await updateUser(state.value);
   if (response?.statusCode == 200) {
     const osSave = await updateUserStore(state.value);
@@ -155,12 +193,18 @@ async function onSubmit() {
       toast.add({ title: "Usuário atualizado", timeout: 2000 });
     }
   } else {
-    console.log(response);
+    //console.log(response);
   }
 }
 
 watchEffect(() => {
   state.value = { ...user.value };
+  if (state.value.socialMedia && state.value.socialMedia.length > 0) {
+    socialMedias.social1 = state.value.socialMedia[0] || "";
+    socialMedias.social2 = state.value.socialMedia[1] || "";
+    socialMedias.social3 = state.value.socialMedia[2] || "";
+    socialMedias.social4 = state.value.socialMedia[3] || "";
+  }
   delete state.value.id;
 });
 </script>

@@ -5,6 +5,7 @@ export interface IUser {
   user: IUserSchema;
   token: string;
   expiresIn: string;
+  following: string[];
 }
 
 export interface IUserSchema {
@@ -16,6 +17,7 @@ export interface IUserSchema {
   phone: string;
   photo?: string;
   cover?: string;
+  socialMedia?: string[];
 }
 
 export interface IUserResponse extends IResponse {
@@ -65,4 +67,5 @@ export interface IAuthenticatedUser {
   isAuthenticated: boolean;
   user: IUserSchema;
   token: IToken;
+  following: string[];
 }

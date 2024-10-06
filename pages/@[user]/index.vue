@@ -10,7 +10,11 @@
           />
         </div>
 
-        <UTabs v-if="user == username" v-model="selected" :items="items">
+        <UTabs
+          v-if="user == userStore.username"
+          v-model="selected"
+          :items="items"
+        >
           <template #articles>
             <div class="w-full flex flex-col gap-4 p-2">
               <template v-if="userData?.data">
@@ -95,31 +99,32 @@
                   color="gray"
                   size="xl"
                 />
-                <UButton
-                  icon="i-carbon-logo-linkedin"
-                  variant="ghost"
-                  color="gray"
-                  size="xl"
-                />
-                <UButton
-                  icon="i-carbon-logo-facebook"
-                  variant="ghost"
-                  color="gray"
-                  size="xl"
-                />
               </div>
             </div>
-            <div class="w-full mt-2">
+            <div
+              v-if="userData.data.user.username != userStore.username"
+              class="w-full mt-2"
+            >
               <UButton
-                v-if="true"
+                v-if="followingStore.includes(userData.data.user.id)"
+                :loading="isLoading"
+                loading-icon="i-carbon-circle-dash"
+                block
+                size="lg"
+                color="gray"
+                @click="UnFollowUser(userData.data.user.id)"
+              >
+                <span class="text-white font-normal"> Não Seguir </span>
+              </UButton>
+              <UButton
+                v-else
+                :loading="isLoading"
+                loading-icon="i-carbon-circle-dash"
                 block
                 size="lg"
                 @click="FollowNewUser(userData.data.user.id)"
               >
                 <span class="text-white font-normal"> Seguir </span>
-              </UButton>
-              <UButton v-else block size="lg" color="gray">
-                <span class="text-white font-normal"> Não Seguir </span>
               </UButton>
             </div>
           </div>
@@ -141,9 +146,10 @@ definePageMeta({
 });
 
 const { getAllUnpublishedArticle } = useArticle();
-const { getOneUser, followUser } = useUser();
+const { getOneUser, followUser, unfollowUser } = useUser();
 const { user } = useRoute().params;
-const { username } = useAuthStore().user;
+const { user: userStore } = useAuthStore();
+const followingStore = storeToRefs(useAuthStore()).following;
 
 const items = [
   {
@@ -159,6 +165,7 @@ const items = [
 ];
 
 const route = useRoute();
+const isLoading = ref(false);
 const router = useRouter();
 const selected = computed({
   get() {
@@ -182,6 +189,7 @@ const drafts = ref<IGetAllArticle>();
 
 onBeforeMount(async () => {
   const response = await getOneUser(user as string);
+  //console.log(response);
   if (response.statusCode == 200) {
     userData.value = response;
   } else {
@@ -191,7 +199,7 @@ onBeforeMount(async () => {
     });
   }
 
-  if (username == user) {
+  if (userStore.username == user) {
     const response = await getAllUnpublishedArticle();
     if (response.statusCode == 200) {
       drafts.value = response.data;
@@ -200,7 +208,26 @@ onBeforeMount(async () => {
 });
 
 async function FollowNewUser(id: string) {
+  isLoading.value = true;
   const response = await followUser(id);
-  console.log(response);
+  //console.log(response);
+  if (response.statusCode == 200) {
+    followingStore.value.push(id);
+  }
+  isLoading.value = false;
+}
+
+async function UnFollowUser(id: string) {
+  isLoading.value = true;
+  const response = await unfollowUser(id);
+  //console.log(response);
+  if (response.statusCode == 200) {
+    followingStore.value = followingStore.value.filter((user) => {
+      if (user != id) {
+        return user;
+      }
+    });
+  }
+  isLoading.value = false;
 }
 </script>

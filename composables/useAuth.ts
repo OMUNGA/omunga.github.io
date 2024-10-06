@@ -14,7 +14,18 @@ export function useAuth() {
             type: "Bearer",
           },
         });
-        return setResponse(200, "success", response.sigIn) as ILoginResponse;
+        const username = response.sigIn.user.username;
+        let data;
+        if (username) {
+          const getFollowing = await GqlGetFollowing({ username: username });
+          data = getFollowing.GetFollowing.map((user) => {
+            return user.followingUser.id;
+          });
+        }
+        return setResponse(200, "success", {
+          ...response.sigIn,
+          following: data,
+        }) as ILoginResponse;
       }
     } catch (error) {
       return getResponse(error) as ILoginResponse;

@@ -2,7 +2,7 @@
   <UContainer>
     <div class="flex justify-between mt-6 mx-2">
       <section class="w-full flex flex-col md:mr-12 gap-4">
-        seguidores aqui
+        quem está a me seguir aqui
       </section>
       <aside
         class="h-full w-full max-w-72 text-center sticky top-20 hidden md:block"
@@ -66,7 +66,8 @@ onBeforeMount(async () => {
   const userResponse = await getOneUser(user as string);
   if (userResponse.statusCode == 200) {
     const followersResponse = await followers(userResponse.data.user.id);
-    console.log(followersResponse);
+    //console.log("Estou sendo seguido: ");
+    //console.log(followersResponse);
   }
 });
 </script>
